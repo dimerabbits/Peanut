@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Dynamic Organization",
+        "description": "An organized, customizable approach for your projects. Create reminders to enable optimal prioritization to meet timelines",
+        "image": "folder.badge.gearshape"
+    },
+    {
+        "title": "Track Productivity",
+        "description": "Never miss an important timeline and ensure information doesn’t get lost in the shuffle.",
+        "image": "chart.line.uptrend.xyaxis"
+    },
+    {
+        "title": "Sharing",
+        "description": "Secure internal chat tool enabling teams and individuals to share updates",
+        "image": "bubble.left.and.exclamationmark.bubble.right"
+    },
+]
