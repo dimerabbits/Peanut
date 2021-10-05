@@ -1,15 +1,13 @@
 //
 //  Persistence-StoreKit.swift
-//  Persistence-StoreKit
+//  Peanut
 //
 //  Created by Adam on 9/2/21.
 //
 
-import Foundation
 import StoreKit
 
 extension PersistenceController {
-
     func appLaunched() {
         guard count(for: Project.fetchRequest()) >= 5 else { return }
 

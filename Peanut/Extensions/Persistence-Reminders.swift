@@ -1,6 +1,6 @@
 //
 //  Persistence-Reminders.swift
-//  Persistence-Reminders
+//  Peanut
 //
 //  Created by Adam on 9/2/21.
 //
@@ -9,7 +9,7 @@ import Foundation
 import UserNotifications
 
 extension PersistenceController {
-
+    // MARK: - Reminder functions
     func addReminders(for project: Project, completion: @escaping (Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
 
@@ -40,7 +40,6 @@ extension PersistenceController {
     func removeReminders(for project: Project) {
         let center = UNUserNotificationCenter.current()
         let id = project.objectID.uriRepresentation().absoluteString
-
         center.removePendingNotificationRequests(withIdentifiers: [id])
     }
 

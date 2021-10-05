@@ -1,8 +1,8 @@
 //
-//  TextEditor.swift
+//  View+HideKeyboard.swift
 //  Peanut
 //
-//  Created by Adam on 9/21/21.
+//  Created by Adam on 10/5/21.
 //
 
 import SwiftUI

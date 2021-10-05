@@ -9,39 +9,54 @@ import SwiftUI
 import CoreSpotlight
 
 struct ContentView: View {
+    private let newProjectActivity = "com.adam.Peanut.newProject"
+
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     @SceneStorage("selectedView") var selectedView: String?
     @EnvironmentObject var persistenceController: PersistenceController
-    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
-
-    private let newProjectActivity = "com.adam.Peanut.newProject"
 
     var body: some View {
         TabView(selection: $selectedView) {
             TodayView(persistenceController: persistenceController)
                 .tag(TodayView.tag)
-                .tabItem({ Label("Today", systemImage: "doc.text.image") })
+                .tabItem {
+                    Image(systemName: "doc.text.image")
+                    Text("Today")
+                }
 
             ProjectsView(persistenceController: persistenceController, showClosedProjects: false)
                 .tag(ProjectsView.openTag)
-                .tabItem({ Label("Open", systemImage: "list.bullet") })
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("Open")
+                }
 
             ProjectsView(persistenceController: persistenceController, showClosedProjects: true)
                 .tag(ProjectsView.closedTag)
-                .tabItem({ Label("Closed", systemImage: "checkmark") })
+                .tabItem {
+                    Image(systemName: "checkmark")
+                    Text("Closed")
+                }
 
-            AwardsView()
+            AwardsView(persistenceController: persistenceController)
                 .tag(AwardsView.tag)
-                .tabItem({ Label("Awards", systemImage: "rosette") })
+                .tabItem {
+                    Image(systemName: "rosette")
+                    Text("Awards")
+                }
 
             SharedProjectsView()
                 .tag(SharedProjectsView.tag)
-                .tabItem({ Label("Share", systemImage: "person.2.wave.2") })
+                .tabItem {
+                    Image(systemName: "person.2.wave.2")
+                    Text("Share")
+                }
         }
         .onContinueUserActivity(CSSearchableItemActionType, perform: moveToToday)
         .onContinueUserActivity(newProjectActivity, perform: createProject)
         .userActivity(newProjectActivity) { activity in
-            activity.title = "New Project"
             activity.isEligibleForPrediction = true
+            activity.title = "New Project"
         }
         .onOpenURL(perform: openURL)
         .sheet(isPresented: $isFirstLaunch) {

@@ -1,6 +1,6 @@
 //
-//  SKProduct-LocalizedPrice.swift
-//  SKProduct-LocalizedPrice
+//  SKProduct-localizedPrice.swift
+//  Peanut
 //
 //  Created by Adam on 9/2/21.
 //
