@@ -5,8 +5,8 @@
 //  Created by Adam on 9/3/21.
 //
 
-import AuthenticationServices
 import SwiftUI
+import AuthenticationServices
 
 struct SignInView: View {
 
@@ -15,6 +15,7 @@ struct SignInView: View {
     }
 
     @State private var status = SignInStatus.unknown
+
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
 

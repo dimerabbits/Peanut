@@ -5,9 +5,9 @@
 //  Created by Adam on 8/31/21.
 //
 
+import SwiftUI
 import CoreData
 import CoreSpotlight
-import SwiftUI
 
 struct TodayView: View {
     static let tag: String? = "Today"
@@ -66,17 +66,13 @@ struct TodayView: View {
             .background(Color.systemGroupedBackground.ignoresSafeArea())
             .navigationTitle("Today")
             .toolbar {
-                if viewModel.items.isEmpty {
-                    Button("Add Data") {
-                        viewModel.addSampleData()
-                    }
-                } else {
-                    Button("Delete all", action: viewModel.persistenceController.deleteAll)
-                }
+                Button("Reset Data", action: viewModel.addSampleData)
             }
             .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
         }
     }
+
+    // MARK: - Helper functions
 
     func loadSpotlightItem(_ userActivity: NSUserActivity) {
         if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {

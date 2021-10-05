@@ -5,24 +5,24 @@
 //  Created by Adam on 9/3/21.
 //
 
-import CloudKit
 import SwiftUI
+import CloudKit
 
 struct SharedItemsView: View {
-
     let project: SharedProject
+
+    @AppStorage("username") var username: String?
+    @State private var showingSignIn = false
+
+    @State private var newChatText = ""
+    @State private var messages = [ChatMessage]()
+    @State private var messagesLoadState = LoadState.inactive
 
     @State private var items = [SharedItem]()
     @State private var itemsLoadState = LoadState.inactive
 
-    @State private var messages = [ChatMessage]()
-    @State private var messagesLoadState = LoadState.inactive
-
-    @AppStorage("username") var username: String?
-    @State private var showSignIn = false
-    @State private var newChatText = ""
-
     @State private var cloudError: CloudError?
+
     @Environment(\.colorScheme) var colorScheme
 
     @ViewBuilder var messagesFooter: some View {
@@ -59,21 +59,20 @@ struct SharedItemsView: View {
                 switch itemsLoadState {
                 case .inactive, .loading:
                     ProgressView()
-                case .noResults:
-                    Text("No results")
                 case .success:
                     ForEach(items) { item in
                         VStack(alignment: .leading) {
                             Text(item.title)
-                                .font(.body)
+                                .font(.headline)
 
                             if item.detail.isEmpty == false {
                                 Text(item.detail)
-                                    .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
                         }
                     }
+                case .noResults:
+                    Text("No results")
                 }
             }
 
@@ -90,16 +89,18 @@ struct SharedItemsView: View {
             }
             .textCase(nil)
         }
-        .listStyle(.insetGrouped)
         .navigationTitle(project.title)
         .onAppear {
             fetchSharedItems()
             fetchChatMessages()
         }
+        .sheet(isPresented: $showingSignIn, content: SignInView.init)
         .alert(item: $cloudError) { error in
-            Alert(title: Text("There was an error"), message: Text(error.message))
+            Alert(
+                title: Text("There was an error"),
+                message: Text(error.message)
+            )
         }
-        .sheet(isPresented: $showSignIn, content: SignInView.init)
     }
 
     func fetchSharedItems() {
@@ -117,18 +118,22 @@ struct SharedItemsView: View {
         operation.desiredKeys = ["title", "detail", "completed"]
         operation.resultsLimit = 50
 
+        // FIXME: This is deprecated, but another available only in iOS 15
         operation.recordFetchedBlock = { record in
             let id = record.recordID.recordName
             let title = record["title"] as? String ?? "No title"
             let detail = record["detail"] as? String ?? ""
             let completed = record["completed"] as? Bool ?? false
 
-            let sharedItem = SharedItem(id: id, title: title, detail: detail, completed: completed)
-
+            let sharedItem = SharedItem(id: id,
+                                        title: title,
+                                        detail: detail,
+                                        completed: completed)
             items.append(sharedItem)
             itemsLoadState = .success
         }
 
+        // FIXME: This is deprecated, but another available only in iOS 15
         operation.queryCompletionBlock = { _, error in
             if let error = error {
                 cloudError = error.getCloudKitError()
@@ -142,41 +147,8 @@ struct SharedItemsView: View {
         CKContainer.default().publicCloudDatabase.add(operation)
     }
 
-    func fetchChatMessages() {
-        guard messagesLoadState == .inactive else { return }
-        messagesLoadState = .loading
-
-        let recordID = CKRecord.ID(recordName: project.id)
-        let reference = CKRecord.Reference(recordID: recordID, action: .none)
-        let pred = NSPredicate(format: "project == %@", reference)
-        let sort = NSSortDescriptor(key: "creationDate", ascending: true)
-        let query = CKQuery(recordType: "Message", predicate: pred)
-        query.sortDescriptors = [sort]
-
-        let operation = CKQueryOperation(query: query)
-        operation.desiredKeys = ["from", "text"]
-
-        operation.recordFetchedBlock = { record in
-            let message = ChatMessage(from: record)
-            messages.append(message)
-            messagesLoadState = .success
-        }
-
-        operation.queryCompletionBlock = { _, error in
-            if let error = error {
-                cloudError = error.getCloudKitError()
-            }
-
-            if messages.isEmpty {
-                messagesLoadState = .noResults
-            }
-        }
-
-        CKContainer.default().publicCloudDatabase.add(operation)
-    }
-
     func signIn() {
-        showSignIn = true
+        showingSignIn = true
     }
 
     func sendChatMessage() {
@@ -198,21 +170,54 @@ struct SharedItemsView: View {
             if let error = error {
                 cloudError = error.getCloudKitError()
                 newChatText = backupChatText
-            } else {
-                if let record = record {
-                    let message = ChatMessage(from: record)
-                    messages.append(message)
-                    messagesLoadState = .success
-                }
+            } else if let record = record {
+                let message = ChatMessage(from: record)
+                messages.append(message)
+                messagesLoadState = .success
             }
         }
+    }
+
+    func fetchChatMessages() {
+        guard messagesLoadState == .inactive else { return }
+        messagesLoadState = .loading
+
+        let recordID = CKRecord.ID(recordName: project.id)
+        let reference = CKRecord.Reference(recordID: recordID, action: .none)
+        let pred = NSPredicate(format: "project == %@", reference)
+        let sort = NSSortDescriptor(key: "creationDate", ascending: true)
+        let query = CKQuery(recordType: "Message", predicate: pred)
+        query.sortDescriptors = [sort]
+
+        let operation = CKQueryOperation(query: query)
+        operation.desiredKeys = ["from", "text"]
+
+        // FIXME: This is deprecated, but another available only in iOS 15
+        operation.recordFetchedBlock = { record in
+            let message = ChatMessage(from: record)
+            messages.append(message)
+            messagesLoadState = .success
+        }
+
+        // FIXME: This is deprecated, but another available only in iOS 15
+        operation.queryCompletionBlock = { _, error in
+            if let error = error {
+                cloudError = error.getCloudKitError()
+            }
+
+            if messages.isEmpty {
+                messagesLoadState = .noResults
+            }
+        }
+
+        CKContainer.default().publicCloudDatabase.add(operation)
     }
 }
 
 struct SharedItemsView_Previews: PreviewProvider {
     static var previews: some View {
-        SharedItemsView(project: .example)
-        SharedItemsView(project: .example)
+        SharedItemsView(project: SharedProject.example)
+        SharedItemsView(project: SharedProject.example)
             .preferredColorScheme(.dark)
     }
 }

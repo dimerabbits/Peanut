@@ -1,6 +1,6 @@
 //
-//  Color-Additions.swift
-//  ColorAdditions
+//  Color-additions.swift
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //

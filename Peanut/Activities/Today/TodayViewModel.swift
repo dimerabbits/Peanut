@@ -47,6 +47,7 @@ extension TodayView {
             )
             /// Initialize parent object before assigning ourself as controller delegate
             super.init()
+
             projectsController.delegate = self
             itemsController.delegate = self
 
@@ -63,16 +64,6 @@ extension TodayView {
             }
         }
 
-        func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            if controller == itemsController, let newItems = controller.fetchedObjects as? [Item] {
-                items = newItems
-                upNext = items.prefix(3)
-                moreToExplore = items.dropFirst(3)
-            } else if controller == projectsController, let newProjects = controller.fetchedObjects as? [Project] {
-                projects = newProjects
-            }
-        }
-
         func addSampleData() {
             persistenceController.deleteAll()
             try? persistenceController.createSampleData()
@@ -84,6 +75,17 @@ extension TodayView {
 
         func selectedProject(with identifier: String) {
             selectedProject = persistenceController.project(with: identifier)
+        }
+
+        // MARK: - NSFetchedResultsControllerDelegate
+
+        func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            items = itemsController.fetchedObjects ?? []
+
+            upNext = items.prefix(3)
+            moreToExplore = items.dropFirst(3)
+
+            projects = projectsController.fetchedObjects ?? []
         }
     }
 }

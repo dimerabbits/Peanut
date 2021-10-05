@@ -5,8 +5,8 @@
 //  Created by Adam on 9/3/21.
 //
 
-import CloudKit
 import Foundation
+import CloudKit
 
 struct ChatMessage: Identifiable {
     let id: String

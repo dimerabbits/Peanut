@@ -5,21 +5,20 @@
 //  Created by Adam on 9/3/21.
 //
 
-import CoreData
 import Foundation
+import CoreData
 
 extension ProjectsView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 
-        let persistenceController: PersistenceController
-        let showClosedProjects: Bool
+        @Published var showingUnlockView = false
 
-        @Published var sortOrder = Item.SortOrder.optimized
+        let persistenceController: PersistenceController
+        var sortOrder = Item.SortOrder.optimized
+        let showClosedProjects: Bool
 
         private let projectsController: NSFetchedResultsController<Project>
         @Published var projects = [Project]()
-
-        @Published var showingUnlockView = false
 
         init(persistenceController: PersistenceController, showClosedProjects: Bool) {
             self.persistenceController = persistenceController
@@ -33,8 +32,7 @@ extension ProjectsView {
                 fetchRequest: request,
                 managedObjectContext: persistenceController.container.viewContext,
                 sectionNameKeyPath: nil,
-                cacheName: nil
-            )
+                cacheName: nil)
 
             super.init()
             projectsController.delegate = self
@@ -43,18 +41,7 @@ extension ProjectsView {
                 try projectsController.performFetch()
                 projects = projectsController.fetchedObjects ?? []
             } catch {
-                print("Failed to fetch our projects!")
-            }
-        }
-
-        func addProject() {
-            let canCreate = persistenceController.fullVersionUnlocked ||
-            persistenceController.count(for: Project.fetchRequest()) < 3
-
-            if canCreate {
-                persistenceController.addProject()
-            } else {
-                showingUnlockView.toggle()
+                fatalError("Failed to fetch projects")
             }
         }
 
@@ -67,17 +54,27 @@ extension ProjectsView {
             persistenceController.save()
         }
 
+        func addProject() {
+            if persistenceController.addProject() == false {
+                showingUnlockView.toggle()
+            }
+        }
+
         func delete(_ offsets: IndexSet, from project: Project) {
             let allItems = project.projectItems(using: sortOrder)
+
             for offset in offsets {
                 let item = allItems[offset]
                 persistenceController.delete(item)
             }
+
             persistenceController.save()
         }
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            projects = projectsController.fetchedObjects ?? []
+            if let newProjects = controller.fetchedObjects as? [Project] {
+                projects = newProjects
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  View+HideKeyboard.swift
+//  View+hideKeyboard.swift
 //  Peanut
 //
 //  Created by Adam on 10/5/21.

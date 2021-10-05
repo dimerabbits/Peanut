@@ -1,6 +1,6 @@
 //
 //  ItemRowView.swift
-//  ItemRowView
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //
@@ -14,6 +14,7 @@ struct ItemRowView: View {
     init(project: Project, item: Item) {
         let viewModel = ViewModel(project: project, item: item)
         _viewModel = StateObject(wrappedValue: viewModel)
+
         self.item = item
     }
 
@@ -28,13 +29,13 @@ struct ItemRowView: View {
                     .foregroundColor(viewModel.color.map { Color($0) } ?? .clear)
                     .opacity(0.8)
             }
+            .accessibilityLabel(viewModel.label)
         }
-        .accessibility(label: Text(viewModel.label))
     }
 }
 
 struct ItemRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemRowView(project: .example, item: .example)
+        ItemRowView(project: Project.example, item: Item.example)
     }
 }

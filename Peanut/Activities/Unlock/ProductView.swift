@@ -5,8 +5,8 @@
 //  Created by Adam on 9/2/21.
 //
 
-import StoreKit
 import SwiftUI
+import StoreKit
 
 struct ProductView: View {
     @EnvironmentObject var unlockManager: UnlockManager

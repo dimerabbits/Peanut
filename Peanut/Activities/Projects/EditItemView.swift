@@ -18,19 +18,20 @@ struct EditItemView: View {
     @State private var priority: Int
     @State private var completed: Bool
 
+    @FocusState private var focusedField: Field?
+
+    enum Field {
+        case itemName, itemDescription
+    }
+
     init(item: Item) {
         self.item = item
+
         _title = State(wrappedValue: item.itemTitle)
         _detail = State(wrappedValue: item.itemDetail)
         _note = State(wrappedValue: item.itemNote)
         _priority = State(wrappedValue: Int(item.priority))
         _completed = State(wrappedValue: item.completed)
-    }
-
-    @FocusState private var focusedField: Field?
-
-    enum Field {
-        case itemName, itemDescription
     }
 
     var body: some View {
@@ -81,11 +82,15 @@ struct EditItemView: View {
     }
 
     func update() {
+        if completed == true {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
+
         item.project?.objectWillChange.send()
 
-        item.title = title.trimmingCharacters(in: .whitespaces)
-        item.detail = detail.trimmingCharacters(in: .whitespaces)
-        item.note = note.trimmingCharacters(in: .whitespaces)
+        item.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        item.detail = detail.trimmingCharacters(in: .whitespacesAndNewlines)
+        item.note = note.trimmingCharacters(in: .whitespacesAndNewlines)
         item.priority = Int16(priority)
         item.completed = completed
     }
@@ -96,11 +101,7 @@ struct EditItemView: View {
 }
 
 struct EditItemView_Previews: PreviewProvider {
-    static var persistenceController = PersistenceController.preview
-
     static var previews: some View {
         EditItemView(item: Item.example)
-            .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            .environmentObject(persistenceController)
     }
 }

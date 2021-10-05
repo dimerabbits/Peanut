@@ -5,8 +5,8 @@
 //  Created by Adam on 9/3/21.
 //
 
-import CloudKit
 import SwiftUI
+import CloudKit
 
 struct SharedProjectsView: View {
     static let tag: String? = "Share"
@@ -14,34 +14,26 @@ struct SharedProjectsView: View {
     @State private var projects = [SharedProject]()
     @State private var loadState = LoadState.inactive
 
-    @State private var cloudError: CloudError?
-
     var body: some View {
         NavigationView {
             Group {
                 switch loadState {
                 case .inactive, .loading:
                     ProgressView()
-                case .noResults:
-                    Text("No results")
                 case .success:
                     List(projects) { project in
                         NavigationLink(destination: SharedItemsView(project: project)) {
                             VStack(alignment: .leading) {
                                 Text(project.title)
-                                    .font(.body)
-
+                                    .font(.headline)
                                 Text(project.owner)
-                                    .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
                         }
                     }
-                    .listStyle(.insetGrouped)
+                case .noResults:
+                    Text("No results")
                 }
-            }
-            .alert(item: $cloudError) { error in
-                Alert(title: Text("There was an error"), message: Text(error.message))
             }
             .navigationTitle("Shared Projects")
         }
@@ -60,6 +52,8 @@ struct SharedProjectsView: View {
         let operation = CKQueryOperation(query: query)
         operation.desiredKeys = ["title", "detail", "owner", "closed"]
         operation.resultsLimit = 50
+
+        // FIXME: This is deprecated, but another available only in iOS 15
         operation.recordFetchedBlock = { record in
             let id = record.recordID.recordName
             let title = record["title"] as? String ?? "No title"
@@ -67,16 +61,19 @@ struct SharedProjectsView: View {
             let owner = record["owner"] as? String ?? "No owner"
             let closed = record["closed"] as? Bool ?? false
 
-            let sharedProject = SharedProject(id: id, title: title, detail: detail, owner: owner, closed: closed)
+            let sharedProject = SharedProject(
+                id: id,
+                title: title,
+                detail: detail,
+                owner: owner,
+                closed: closed
+            )
             projects.append(sharedProject)
             loadState = .success
         }
 
-        operation.queryCompletionBlock = { _, error in
-            if let error = error {
-                cloudError = error.getCloudKitError()
-            }
-
+        // FIXME: This is deprecated, but another available only in iOS 15
+        operation.queryCompletionBlock = { _, _ in
             if projects.isEmpty {
                 loadState = .noResults
             }

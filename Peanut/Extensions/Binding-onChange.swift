@@ -1,12 +1,11 @@
 //
-//  Binding-OnChange.swift
-//  Binding-OnChange
+//  Binding-onChange.swift
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //
 
 import SwiftUI
-import Foundation
 
 extension Binding {
     func onChange(_ handler: @escaping () -> Void) -> Binding<Value> {

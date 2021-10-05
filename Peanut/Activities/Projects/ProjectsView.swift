@@ -23,22 +23,28 @@ struct ProjectsView: View {
 
     var body: some View {
         NavigationView {
-            ZStack {
-                List {
+            Group {
+                if viewModel.projects.count == 0 {
+                    Text("There's nothing here wight now")
+                        .foregroundColor(.secondary)
+                } else {
                     projectsList
                 }
             }
             .navigationTitle(viewModel.showClosedProjects ? "Closed Projects" : "Open Projects")
-            .actionSheet(isPresented: $showingSortOrder) {
-                ActionSheet(title: Text("Sort items"), message: nil, buttons: [
-                    .default(Text("Optimized")) { viewModel.sortOrder = .optimized },
-                    .default(Text("Creation Date")) { viewModel.sortOrder = .creationDate },
-                    .default(Text("Title")) { viewModel.sortOrder = .title } ])
-            }
             .toolbar {
                 addProjectToolbarItem
                 sortOrderToolbarItem
             }
+            .actionSheet(isPresented: $showingSortOrder) {
+                ActionSheet(title: Text("Sort items"), message: nil, buttons: [
+                    .default(Text("Optimized")) { viewModel.sortOrder = .optimized },
+                    .default(Text("Creation Date")) { viewModel.sortOrder = .creationDate },
+                    .default(Text("Title")) { viewModel.sortOrder = .title }
+                ])
+            }
+
+            SelectSomethingView()
         }
         .sheet(isPresented: $viewModel.showingUnlockView) {
             UnlockView()
@@ -46,28 +52,32 @@ struct ProjectsView: View {
     }
 
     var projectsList: some View {
-        ForEach(viewModel.projects) { project in
-            Section(header: ProjectHeaderView(project: project)) {
-                ForEach(project.projectItems(using: viewModel.sortOrder)) { item in
-                    ItemRowView(project: project, item: item)
-                }
-                .onDelete { offsets in
-                    viewModel.delete(offsets, from: project)
-                }
-
-                if viewModel.showClosedProjects == false {
-                    Button {
-                        withAnimation {
-                            viewModel.addItem(to: project)
-                        }
-                    } label: {
-                        Label("Add New Item", systemImage: "plus")
+        List {
+            ForEach(viewModel.projects) { project in
+                Section(header: ProjectHeaderView(project: project)) {
+                    ForEach(project.projectItems(using: viewModel.sortOrder)) { item in
+                        ItemRowView(project: project, item: item)
                     }
-                    .accentColor(Color(project.projectColor))
+                    .onDelete { offsets in
+                        viewModel.delete(offsets, from: project)
+                    }
+
+                    if viewModel.showClosedProjects == false {
+                        Button {
+                            withAnimation {
+                                viewModel.addItem(to: project)
+                            }
+                        } label: {
+                            Label("Add New Item", systemImage: "plus")
+                        }
+                        .accentColor(Color(project.projectColor))
+                    }
                 }
             }
         }
     }
+
+    // MARK: - Toolbar items
 
     var addProjectToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -77,8 +87,11 @@ struct ProjectsView: View {
                         viewModel.addProject()
                     }
                 } label: {
-                    Label("Add Project", systemImage: "plus")
-                        .font(.subheadline)
+                    if UIAccessibility.isVoiceOverRunning {
+                        Text("Add Project")
+                    } else {
+                        Label("Add Project", systemImage: "plus")
+                    }
                 }
             }
         }
@@ -99,7 +112,5 @@ struct ProjectsView: View {
 struct ProjectsView_Previews: PreviewProvider {
     static var previews: some View {
         ProjectsView(persistenceController: PersistenceController.preview, showClosedProjects: false)
-        ProjectsView(persistenceController: PersistenceController.preview, showClosedProjects: false)
-            .preferredColorScheme(.dark)
     }
 }

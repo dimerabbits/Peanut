@@ -7,7 +7,6 @@
 
 import SwiftUI
 import CoreData
-import StoreKit
 import CoreSpotlight
 import WidgetKit
 
@@ -26,6 +25,7 @@ class PersistenceController: ObservableObject {
         get {
             defaults.bool(forKey: "fullVersionUnlocked")
         }
+
         set {
             defaults.set(newValue, forKey: "fullVersionUnlocked")
         }
@@ -39,7 +39,6 @@ class PersistenceController: ObservableObject {
     /// - Parameter defaults: The UserDefaults suite where user data should be stored.
     init(inMemory: Bool = false, defaults: UserDefaults = .standard) {
         self.defaults = defaults
-
         container = NSPersistentCloudKitContainer(name: "Peanut", managedObjectModel: Self.model)
 
         /// For testing and previewing purposes, we create a temporary,
@@ -100,29 +99,30 @@ class PersistenceController: ObservableObject {
     func createSampleData() throws {
         let viewContext = container.viewContext
 
-        for projectCounter in 1...5 {
+        for outer in 1...5 {
             let project = Project(context: viewContext)
-            project.title = "Project \(projectCounter)"
+            project.title = "Project \(outer)"
             project.items = []
             project.creationDate = Date()
             project.closed = Bool.random()
 
-            for itemCounter in 1...10 {
+            for inner in 1...10 {
                 let item = Item(context: viewContext)
-                item.title = "Item \(itemCounter)"
+                item.title = "Item \(inner)"
                 item.creationDate = Date()
-                item.completed = Bool.random()
+                item.completed = false
                 item.project = project
                 item.priority = Int16.random(in: 1...3)
+
+                item.completed = Bool.random()
             }
         }
 
         try viewContext.save()
     }
 
-    /// Saves our Core Data context iff there are changes. This silently ignores
-    /// any errors caused by saving, but this should be fine because our
-    /// attributes are optional.
+    /// Saves our Core Data context if there are changes. This silently ignores
+    /// any errors caused by saving, but this should be fine because all our attributes are optional.
     func save() {
         if container.viewContext.hasChanges {
             try? container.viewContext.save()
@@ -135,10 +135,9 @@ class PersistenceController: ObservableObject {
         let id = object.objectID.uriRepresentation().absoluteString
         if object is Item {
             CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [id])
-        } else if object is Project {
+        } else {
             CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: [id])
         }
-
         /// Remove object from Core Data
         container.viewContext.delete(object)
     }
@@ -181,40 +180,42 @@ class PersistenceController: ObservableObject {
             domainIdentifier: projectID,
             attributeSet: attributeSet
         )
+
         CSSearchableIndex.default().indexSearchableItems([searchableItem])
 
         save()
     }
 
     func item(with uniqueIdentifier: String) -> Item? {
-        guard let url = URL(string: uniqueIdentifier) else {
-            return nil
-        }
+        guard let url = URL(string: uniqueIdentifier) else { return nil }
 
-        guard let id = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: url) else {
-            return nil
-        }
+        guard let id = container.persistentStoreCoordinator.managedObjectID(
+            forURIRepresentation: url) else { return nil }
 
         return try? container.viewContext.existingObject(with: id) as? Item
     }
 
     func project(with uniqueIdentifier: String) -> Project? {
-        guard let url = URL(string: uniqueIdentifier) else {
-            return nil
-        }
+        guard let url = URL(string: uniqueIdentifier) else { return nil }
 
-        guard let id = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: url) else {
-            return nil
-        }
+        guard let id = container.persistentStoreCoordinator.managedObjectID(
+            forURIRepresentation: url) else { return nil }
 
         return try? container.viewContext.existingObject(with: id) as? Project
     }
 
-    func addProject() {
-        let project = Project(context: container.viewContext)
-        project.closed = false
-        project.creationDate = Date()
-        save()
+    @discardableResult func addProject() -> Bool {
+        let canCreate = fullVersionUnlocked || count(for: Project.fetchRequest()) < 3
+
+        if canCreate {
+            let project = Project(context: container.viewContext)
+            project.closed = false
+            project.creationDate = Date()
+            save()
+            return true
+        } else {
+            return false
+        }
     }
 
     func fetchRequestForTopItems(count: Int) -> NSFetchRequest<Item> {

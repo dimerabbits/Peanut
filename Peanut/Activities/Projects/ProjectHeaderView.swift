@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProjectHeaderView: View {
     @ObservedObject var project: Project
-    @EnvironmentObject var persistenceController: PersistenceController
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -38,6 +37,6 @@ struct ProjectHeaderView: View {
 
 struct ProjectHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectHeaderView(project: .example)
+        ProjectHeaderView(project: Project.example)
     }
 }

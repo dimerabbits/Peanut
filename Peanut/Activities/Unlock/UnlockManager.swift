@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 import StoreKit
 
 class UnlockManager: NSObject, ObservableObject, SKPaymentTransactionObserver, SKProductsRequestDelegate {
@@ -19,8 +20,7 @@ class UnlockManager: NSObject, ObservableObject, SKPaymentTransactionObserver, S
     }
 
     private enum StoreError: Error {
-        case invalidIdentifiers
-        case missingProduct
+        case invalidIdentifiers, missingProduct
     }
 
     @Published var requestState = RequestState.loading
