@@ -114,7 +114,6 @@ extension Project {
         let operation = CKFetchRecordsOperation(recordIDs: [id])
         operation.desiredKeys = ["recordID"]
 
-        // FIXME: This is deprecated, but another available only in iOS 15
         operation.fetchRecordsCompletionBlock = { records, _ in
             if let records = records {
                 completion(records.count == 1)

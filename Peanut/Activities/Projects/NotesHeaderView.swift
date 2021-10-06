@@ -35,7 +35,7 @@ struct NotesHeaderView_Previews: PreviewProvider {
     static var persistenceController = PersistenceController.preview
 
     static var previews: some View {
-        EditProjectView(project: .example)
+        EditProjectView(persistenceController: PersistenceController.preview, project: .example)
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
             .environmentObject(persistenceController)
     }

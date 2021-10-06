@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ProjectSummaryView: View {
     @ObservedObject var project: Project
+    @EnvironmentObject var persistenceController: PersistenceController
 
     var body: some View {
-        NavigationLink(destination: EditProjectView(project: project)) {
+        NavigationLink(destination: EditProjectView(persistenceController: persistenceController, project: project)) {
             CustomProgressView(project: project)
         }
         .frame(width: 160)

@@ -13,6 +13,7 @@ struct TodayView: View {
     static let tag: String? = "Today"
 
     @StateObject private var viewModel: ViewModel
+    @EnvironmentObject var persistenceController: PersistenceController
     @Environment(\.colorScheme) var colorScheme
 
     init(persistenceController: PersistenceController) {
@@ -37,7 +38,7 @@ struct TodayView: View {
 
                 if let project = viewModel.selectedProject {
                     NavigationLink(
-                        destination: EditProjectView(project: project),
+                        destination: EditProjectView(persistenceController: persistenceController, project: project),
                         tag: project,
                         selection: $viewModel.selectedProject,
                         label: EmptyView.init
@@ -50,7 +51,9 @@ struct TodayView: View {
 
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: projectRows) {
-                            ForEach(viewModel.projects, content: ProjectSummaryView.init)
+                            ForEach(viewModel.projects) { project in
+                                ProjectSummaryView(project: project)
+                            }
                         }
                         .padding(10)
                         .fixedSize(horizontal: true, vertical: true)
@@ -83,8 +86,8 @@ struct TodayView: View {
 
 struct TodayView_Previews: PreviewProvider {
     static var previews: some View {
-        TodayView(persistenceController: .preview)
-        TodayView(persistenceController: .preview)
+        TodayView(persistenceController: PersistenceController.preview)
+        TodayView(persistenceController: PersistenceController.preview)
             .preferredColorScheme(.dark)
     }
 }

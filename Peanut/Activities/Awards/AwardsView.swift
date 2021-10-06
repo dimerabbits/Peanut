@@ -10,19 +10,13 @@ import SwiftUI
 struct AwardsView: View {
     static let tag: String? = "Awards"
 
-    @StateObject var viewModel: ViewModel
-
+    @EnvironmentObject var persistenceController: PersistenceController
     @State private var selectedAward = Award.example
     @State private var showingAwardDetails = false
 
-    var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: 100, maximum: 100))]
-    }
-
-    init(persistenceController: PersistenceController) {
-        let viewModel = ViewModel(persistenceController: persistenceController)
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    let columns = [
+        GridItem(.adaptive(minimum: 100, maximum: 100))
+    ]
 
     var body: some View {
         NavigationView {
@@ -31,7 +25,7 @@ struct AwardsView: View {
                     ForEach(Award.allAwards) { award in
                         Button {
                             selectedAward = award
-                            showingAwardDetails = true
+                            showingAwardDetails.toggle()
                         } label: {
                             Image(systemName: award.image)
                                 .resizable()
@@ -40,8 +34,8 @@ struct AwardsView: View {
                                 .frame(width: 100, height: 100)
                                 .foregroundColor(color(for: award))
                         }
-                        .accessibilityLabel(label(for: award))
-                        .accessibilityHint(Text(award.description))
+                        .accessibility(label: label(for: award))
+                        .accessibility(hint: Text(award.description))
                     }
                 }
             }
@@ -50,27 +44,25 @@ struct AwardsView: View {
         .alert(isPresented: $showingAwardDetails, content: getAwardAlert)
     }
 
-    // MARK: - Helper functions
-
     func color(for award: Award) -> Color {
-        viewModel.color(for: award).map { Color($0) } ?? Color.secondary.opacity(0.5)
+        persistenceController.hasEarned(award: award) ? Color(award.color) : Color.secondary.opacity(0.5)
     }
 
     func label(for award: Award) -> Text {
-        Text(viewModel.label(for: award))
+        Text(persistenceController.hasEarned(award: award) ? "Unlocked: \(award.name)" : "Locked")
     }
 
     func getAwardAlert() -> Alert {
-        if viewModel.hasEarned(award: selectedAward) {
+        if persistenceController.hasEarned(award: selectedAward) {
             return Alert(
                 title: Text("Unlocked: \(selectedAward.name)"),
-                message: Text("\(Text(selectedAward.description))"),
+                message: Text(selectedAward.description),
                 dismissButton: .default(Text("OK"))
             )
         } else {
             return Alert(
                 title: Text("Locked"),
-                message: Text("\(Text(selectedAward.description))"),
+                message: Text(selectedAward.description),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -79,6 +71,6 @@ struct AwardsView: View {
 
 struct AwardsView_Previews: PreviewProvider {
     static var previews: some View {
-        AwardsView(persistenceController: .preview)
+        AwardsView()
     }
 }

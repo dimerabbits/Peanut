@@ -38,7 +38,7 @@ struct ContentView: View {
                     Text("Closed")
                 }
 
-            AwardsView(persistenceController: persistenceController)
+            AwardsView()
                 .tag(AwardsView.tag)
                 .tabItem {
                     Image(systemName: "rosette")

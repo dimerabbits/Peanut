@@ -7,34 +7,22 @@
 
 import SwiftUI
 import CloudKit
+import Combine
 import CoreHaptics
 
 struct EditProjectView: View {
-    @ObservedObject var project: Project
 
-    @EnvironmentObject var persistenceController: PersistenceController
+    @StateObject var viewModel: ViewModel
+    @ObservedObject var project: Project
 
     @AppStorage("username") var username: String?
 
-    @State private var title: String
-    @State private var detail: String
-    @State private var color: String
-    @State private var note: String
-    @State private var remindMe = false
-    @State private var reminderTime: Date
-
-    @State private var showingNotificationsError = false
-    @State private var showingDeleteConfirm = false
-    @State private var engine = try? CHHapticEngine()
-    @State private var showingSignIn = false
-    @State private var cloudError: CloudError?
     @State private var cloudStatus = CloudStatus.checking
+    @State private var showingSignIn = false
+    @State private var isBusy = false
+    @State private var cloudError: CloudError?
 
     @FocusState private var focusedField: Field?
-
-    enum CloudStatus {
-        case checking, exists, absent
-    }
 
     enum Field {
         case projectName, projectDescription
@@ -42,56 +30,45 @@ struct EditProjectView: View {
 
     let colorRow = [ GridItem(.adaptive(minimum: 44)) ]
 
-    init(project: Project) {
+    init(persistenceController: PersistenceController, project: Project) {
         self.project = project
-
-        _title = State(wrappedValue: project.projectTitle)
-        _detail = State(wrappedValue: project.projectDetail)
-        _color = State(wrappedValue: project.projectColor)
-        _note = State(wrappedValue: project.projectNote)
-
-        if let projectReminderTime = project.reminderTime {
-            _reminderTime = State(wrappedValue: projectReminderTime)
-            _remindMe = State(wrappedValue: true)
-        } else {
-            _reminderTime = State(wrappedValue: Date())
-            _remindMe = State(wrappedValue: false)
-        }
+        let viewModel = ViewModel(persistenceController: persistenceController, project: project)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
         Form {
             Section {
-                CustomTextField("Project name", text: $title.onChange(update))
+                CustomTextField("Project name", text: $viewModel.title.onChange(viewModel.update))
                     .focused($focusedField, equals: .projectName)
                     .submitLabel(.next)
 
-                CustomTextField("Project Description", text: $detail.onChange(update))
+                CustomTextField("Project Description", text: $viewModel.detail.onChange(viewModel.update))
                     .focused($focusedField, equals: .projectDescription)
                     .submitLabel(.done)
 
-                Toggle("Show reminders", isOn: $remindMe.animation().onChange(update))
+                Toggle("Show reminders", isOn: $viewModel.remindMe.animation().onChange(viewModel.update))
                     .confirmationDialog(
                         "There was a problem. Please check you have notifications enabled.",
-                        isPresented: $showingNotificationsError,
+                        isPresented: $viewModel.showingNotificationsError,
                         titleVisibility: .visible
                     ) {
                         Button("Check Settings", role: .none) {
-                            showAppSettings()
+                            viewModel.showAppSettings()
                         }
                     }
 
-                if remindMe {
+                if viewModel.remindMe {
                     DatePicker(
                         "Reminder time",
-                        selection: $reminderTime.onChange(update),
+                        selection: $viewModel.reminderTime.onChange(viewModel.update),
                         displayedComponents: [.hourAndMinute, .date])
                         .datePickerStyle(.graphical)
                 }
             }
 
             Section(header: NotesHeaderView()) {
-                TextEditor(text: $note.onChange(update))
+                TextEditor(text: $viewModel.note.onChange(viewModel.update))
                     .foregroundColor(Color.gray)
                     .font(.custom("HelveticaNeue", size: 16))
                     .multilineTextAlignment(.leading)
@@ -111,18 +88,18 @@ struct EditProjectView: View {
             .textCase(nil)
 
             Section {
-                Button(project.closed ? "Reopen" : "Close", action: toggleClosed)
+                Button(viewModel.project.closed ? "Reopen" : "Close", action: viewModel.toggleClosed)
                 Button("Delete") {
-                    showingDeleteConfirm.toggle()
+                    viewModel.showingDeleteConfirm.toggle()
                 }
                 .tint(.red)
                 .confirmationDialog(
                     "Permanently erase this project and all of it's items?",
-                    isPresented: $showingDeleteConfirm,
+                    isPresented: $viewModel.showingDeleteConfirm,
                     titleVisibility: .visible
                 ) {
                     Button("Delete", role: .destructive) {
-                        delete()
+                        viewModel.delete()
                     }
                 }
             }
@@ -133,9 +110,9 @@ struct EditProjectView: View {
             case .checking:
                 ProgressView()
             case .exists:
-                Button(action: removeFromCloud) {
-                    Label("Remove from iCloud", systemImage: "icloud.slash")
-                }
+            Button(action: removeFromCloud) {
+                        Label("Remove from iCloud", systemImage: "icloud.slash")
+                    }
             case .absent:
                 Button(action: uploadToCloud) {
                     Label("Upload to iCloud", systemImage: "icloud.and.arrow.up")
@@ -143,7 +120,7 @@ struct EditProjectView: View {
             }
         }
         .onAppear(perform: updateCloudStatus)
-        .onDisappear(perform: persistenceController.save)
+        .onDisappear(perform: viewModel.save)
         .onSubmit {
             switch focusedField {
             case .projectName:
@@ -169,103 +146,23 @@ struct EditProjectView: View {
                 .aspectRatio(1, contentMode: .fit)
                 .cornerRadius(6)
 
-            if item == color {
+            if item == viewModel.color {
                 Image(systemName: "scribble.variable")
                     .foregroundColor(.white)
                     .font(.largeTitle)
             }
         }
         .onTapGesture {
-            color = item
-            update()
+            viewModel.color = item
+            viewModel.update()
         }
         .accessibilityElement(children: .ignore)
         .accessibilityAddTraits(
-            item == color
-                ? [.isButton, .isSelected]
-                : .isButton
+            item == viewModel.color
+            ? [.isButton, .isSelected]
+            : .isButton
         )
         .accessibilityLabel(LocalizedStringKey(item))
-    }
-
-    // MARK: - Action functions
-
-    func toggleClosed() {
-        project.closed.toggle()
-
-        if project.closed {
-            /// UINotificationFeedbackGenerator().notificationOccurred(.success)
-            do {
-                try engine?.start()
-                let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0)
-                let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
-                let start = CHHapticParameterCurve.ControlPoint(relativeTime: 0, value: 1)
-                let end = CHHapticParameterCurve.ControlPoint(relativeTime: 1, value: 0)
-                /// use that curve to control the haptic strength
-                let parameter = CHHapticParameterCurve(
-                    parameterID: .hapticIntensityControl,
-                    controlPoints: [start, end],
-                    relativeTime: 0
-                )
-                /// transient, strong and dull, and starting immediately
-                let event1 = CHHapticEvent(
-                    eventType: .hapticTransient,
-                    parameters: [intensity, sharpness],
-                    relativeTime: 0
-                )
-                /// a continuous haptic event starting immediately and lasting one second
-                let event2 = CHHapticEvent(
-                    eventType: .hapticContinuous,
-                    parameters: [sharpness, intensity],
-                    relativeTime: 0.125,
-                    duration: 1
-                )
-                /// events into single sequence & haptic fades with strength
-                let pattern = try CHHapticPattern(events: [event1, event2], parameterCurves: [parameter])
-                /// Make player
-                let player = try engine?.makePlayer(with: pattern)
-                try player?.start(atTime: 0)
-            } catch {
-                /// if haptics didn't work, its ok!
-                debugPrint("Error when working with haptics: \(error.localizedDescription)")
-            }
-        }
-    }
-
-    func update() {
-        project.objectWillChange.send()
-
-        project.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        project.detail = detail.trimmingCharacters(in: .whitespacesAndNewlines)
-        project.note = note.trimmingCharacters(in: .whitespacesAndNewlines)
-        project.color = color
-
-        if remindMe {
-            project.reminderTime = reminderTime
-
-            persistenceController.addReminders(for: project) { success in
-                if success == false {
-                    project.reminderTime = nil
-                    remindMe = false
-                    showingNotificationsError = true
-                }
-            }
-        } else {
-            project.reminderTime = nil
-            persistenceController.removeReminders(for: project)
-        }
-    }
-
-    func delete() {
-        persistenceController.delete(project)
-    }
-
-    func showAppSettings() {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-
-        if UIApplication.shared.canOpenURL(settingsUrl) {
-            UIApplication.shared.open(settingsUrl)
-        }
     }
 
     // MARK: - iCloud
@@ -276,16 +173,19 @@ struct EditProjectView: View {
             let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)
             operation.savePolicy = .allKeys
 
-            // FIXME: This is deprecated, but another available only in iOS 15
-            operation.modifyRecordsCompletionBlock = { _, _, error in
-                if let error = error {
-                    cloudError = error.getCloudKitError()
+            operation.modifyRecordsResultBlock = { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success: break
+                    case .failure(let error): self.cloudError = error.getCloudKitError()
+                    }
                 }
+                self.isBusy = false
 
-                updateCloudStatus()
+                self.updateCloudStatus()
             }
-            cloudStatus = .checking
 
+            cloudStatus = .checking
             CKContainer.default().publicCloudDatabase.add(operation)
         } else {
             showingSignIn = true
@@ -298,13 +198,16 @@ struct EditProjectView: View {
 
         let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [id])
 
-        // FIXME: This is deprecated, but another available only in iOS 15
-        operation.modifyRecordsCompletionBlock = { _, _, error in
-            if let error = error {
-                cloudError = error.getCloudKitError()
+        operation.modifyRecordsResultBlock = { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success: break
+                case .failure(let error): self.cloudError = error.getCloudKitError()
+                }
             }
+            self.isBusy = false
 
-            updateCloudStatus()
+            self.updateCloudStatus()
         }
 
         cloudStatus = .checking
@@ -312,7 +215,7 @@ struct EditProjectView: View {
     }
 
     func updateCloudStatus() {
-        project.checkCloudStatus { exists in
+        project.checkCloudStatus { [self] exists in
             if exists {
                 cloudStatus = .exists
             } else {
@@ -324,6 +227,6 @@ struct EditProjectView: View {
 
 struct EditProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProjectView(project: Project.example)
+        EditProjectView(persistenceController: PersistenceController.preview, project: Project.example)
     }
 }

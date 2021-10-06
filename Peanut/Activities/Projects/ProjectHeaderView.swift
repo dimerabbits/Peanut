@@ -9,11 +9,16 @@ import SwiftUI
 
 struct ProjectHeaderView: View {
     @ObservedObject var project: Project
+    @EnvironmentObject var persistenceController: PersistenceController
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .bottom) {
-                NavigationLink(destination: EditProjectView(project: project)) {
+                NavigationLink(
+                    destination: EditProjectView(
+                        persistenceController: persistenceController,
+                        project: project)
+                ) {
                     Text("**\(project.projectTitle)**")
                         .foregroundColor(Color(project.projectColor))
                         .font(.subheadline)
