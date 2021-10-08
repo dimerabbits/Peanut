@@ -1,30 +1,30 @@
 //
 //  SharedItemsView.swift
-//  SharedItemsView
+//  Peanut
 //
 //  Created by Adam on 9/3/21.
 //
 
 import SwiftUI
 import CloudKit
-import Combine
 
 struct SharedItemsView: View {
+
     let project: SharedProject
 
-    @AppStorage("username") var username: String?
-    @State private var showingSignIn = false
-
-    @State private var newChatText = ""
-    @State private var messages = [ChatMessage]()
-    @State private var messagesLoadState = LoadState.inactive
+    @Environment(\.colorScheme) var colorScheme
 
     @State private var items = [SharedItem]()
     @State private var itemsLoadState = LoadState.inactive
-    @State private var isBusy = false
-    @State private var cloudError: CloudError?
 
-    @Environment(\.colorScheme) var colorScheme
+    @AppStorage("username") var username: String?
+    @State private var showingSignIn = false
+    @State private var newChatText = ""
+
+    @State private var messages = [ChatMessage]()
+    @State private var messagesLoadState = LoadState.inactive
+
+    @State private var cloudError: CloudError?
 
     @ViewBuilder var messagesFooter: some View {
         if username == nil {
@@ -60,6 +60,8 @@ struct SharedItemsView: View {
                 switch itemsLoadState {
                 case .inactive, .loading:
                     ProgressView()
+                case .noResults:
+                    Text("No results")
                 case .success:
                     ForEach(items) { item in
                         VStack(alignment: .leading) {
@@ -72,8 +74,6 @@ struct SharedItemsView: View {
                             }
                         }
                     }
-                case .noResults:
-                    Text("No results")
                 }
             }
 
@@ -95,13 +95,10 @@ struct SharedItemsView: View {
             fetchSharedItems()
             fetchChatMessages()
         }
-        .sheet(isPresented: $showingSignIn, content: SignInView.init)
         .alert(item: $cloudError) { error in
-            Alert(
-                title: Text("There was an error"),
-                message: Text(error.message)
-            )
+            Alert(title: Text("There was an error"), message: Text(error.message))
         }
+        .sheet(isPresented: $showingSignIn, content: SignInView.init)
     }
 
     func fetchSharedItems() {
@@ -119,8 +116,10 @@ struct SharedItemsView: View {
         operation.desiredKeys = ["title", "detail", "completed"]
         operation.resultsLimit = 50
 
-        operation.recordMatchedBlock = { recordID, result in
+        operation.recordMatchedBlock = { record, result in
             switch result {
+            case .failure(let error):
+                self.cloudError = error.getCloudKitError()
             case .success(let record):
                 let id = record.recordID.recordName
                 let title = record["title"] as? String ?? "No title"
@@ -135,20 +134,18 @@ struct SharedItemsView: View {
                 )
                 items.append(sharedItem)
                 itemsLoadState = .success
-
-            case .failure(let error): self.cloudError =
-                error.getCloudKitError()
             }
         }
 
         operation.queryResultBlock = { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success: break
-                case .failure(let error): self.cloudError = error.getCloudKitError()
+                case .failure(let error):
+                    self.cloudError = error.getCloudKitError()
+                case .success:
+                    break
                 }
             }
-            self.isBusy = false
 
             if items.isEmpty {
                 itemsLoadState = .noResults
@@ -158,8 +155,47 @@ struct SharedItemsView: View {
         CKContainer.default().publicCloudDatabase.add(operation)
     }
 
-    func signIn() {
-        showingSignIn = true
+    func fetchChatMessages() {
+        guard messagesLoadState == .inactive else { return }
+        messagesLoadState = .loading
+
+        let recordID = CKRecord.ID(recordName: project.id)
+        let reference = CKRecord.Reference(recordID: recordID, action: .none)
+        let pred = NSPredicate(format: "project == %@", reference)
+        let sort = NSSortDescriptor(key: "creationDate", ascending: true)
+        let query = CKQuery(recordType: "Message", predicate: pred)
+        query.sortDescriptors = [sort]
+
+        let operation = CKQueryOperation(query: query)
+        operation.desiredKeys = ["from", "text"]
+
+        operation.recordMatchedBlock = { record, result in
+            switch result {
+            case .failure(let error):
+                self.cloudError = error.getCloudKitError()
+            case .success(let record):
+                let message = ChatMessage(from: record)
+                messages.append(message)
+                messagesLoadState = .success
+            }
+        }
+
+        operation.queryResultBlock = { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    self.cloudError = error.getCloudKitError()
+                case .success:
+                    break
+                }
+            }
+
+            if items.isEmpty {
+                itemsLoadState = .noResults
+            }
+        }
+
+        CKContainer.default().publicCloudDatabase.add(operation)
     }
 
     func sendChatMessage() {
@@ -189,46 +225,8 @@ struct SharedItemsView: View {
         }
     }
 
-    func fetchChatMessages() {
-        guard messagesLoadState == .inactive else { return }
-        messagesLoadState = .loading
-
-        let recordID = CKRecord.ID(recordName: project.id)
-        let reference = CKRecord.Reference(recordID: recordID, action: .none)
-        let pred = NSPredicate(format: "project == %@", reference)
-        let sort = NSSortDescriptor(key: "creationDate", ascending: true)
-        let query = CKQuery(recordType: "Message", predicate: pred)
-        query.sortDescriptors = [sort]
-
-        let operation = CKQueryOperation(query: query)
-        operation.desiredKeys = ["from", "text"]
-
-        operation.recordMatchedBlock = { _, result in
-            switch result {
-            case .success(let record):
-                let message = ChatMessage(from: record)
-                messages.append(message)
-                messagesLoadState = .success
-            case .failure(let error): self.cloudError =
-                error.getCloudKitError()
-            }
-        }
-
-        operation.queryResultBlock = { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success: break
-                case .failure(let error): self.cloudError = error.getCloudKitError()
-                }
-            }
-            self.isBusy = false
-
-            if items.isEmpty {
-                itemsLoadState = .noResults
-            }
-        }
-
-        CKContainer.default().publicCloudDatabase.add(operation)
+    func signIn() {
+        showingSignIn = true
     }
 }
 

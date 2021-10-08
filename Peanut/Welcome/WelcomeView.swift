@@ -1,6 +1,6 @@
 //
 //  WelcomeView.swift
-//  WelcomeView
+//  Peanut
 //
 //  Created by Adam on 9/4/21.
 //
@@ -14,12 +14,12 @@ struct WelcomeView: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 45) {
+            VStack(spacing: 30) {
+                Spacer(minLength: 30)
                 Text("**Welcome to Peanut**")
                     .multilineTextAlignment(.center)
                     .font(.largeTitle)
                     .shadow(radius: 1, y: 1)
-                    .padding()
 
                 ForEach(Feature.allFeatures) { feature in
                     HStack(alignment: .center, spacing: 1) {
@@ -30,7 +30,7 @@ struct WelcomeView: View {
                             .foregroundColor(.accentColor)
                             .accessibilityHidden(true)
 
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 2) {
                             Text(feature.title)
                                 .font(.headline)
 
@@ -42,29 +42,22 @@ struct WelcomeView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(.top)
+                Spacer(minLength: 100)
             }
-
-            Spacer()
-
-            Image(systemName: "network.badge.shield.half.filled")
-                .symbolRenderingMode(.hierarchical)
-                .foregroundColor(.accentColor)
-                .font(.title2)
 
             Button("About Peanut & Privacy…") {
                 self.presentingSheet = true
             }
             .padding()
-            .frame(maxWidth: .infinity)
             .font(.footnote)
 
             Button(action: close) {
                 Text("Continue")
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: 44)
+                    .background(Color.accentColor.opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            .buttonStyle(.bordered)
-            .controlSize(.large)
-
         }
         .sheet(isPresented: $presentingSheet) {
             AboutView()

@@ -1,24 +1,24 @@
 //
 //  ProjectsViewModel.swift
-//  ProjectsViewModel
+//  Peanut
 //
 //  Created by Adam on 9/3/21.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 extension ProjectsView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 
-        @Published var showingUnlockView = false
-
         let persistenceController: PersistenceController
-        var sortOrder = Item.SortOrder.optimized
         let showClosedProjects: Bool
 
         private let projectsController: NSFetchedResultsController<Project>
+
+        @Published var sortOrder = Item.SortOrder.optimized
         @Published var projects = [Project]()
+        @Published var showingUnlockView = false
 
         init(persistenceController: PersistenceController, showClosedProjects: Bool) {
             self.persistenceController = persistenceController
@@ -32,8 +32,8 @@ extension ProjectsView {
                 fetchRequest: request,
                 managedObjectContext: persistenceController.container.viewContext,
                 sectionNameKeyPath: nil,
-                cacheName: nil)
-
+                cacheName: nil
+            )
             super.init()
             projectsController.delegate = self
 
@@ -41,17 +41,8 @@ extension ProjectsView {
                 try projectsController.performFetch()
                 projects = projectsController.fetchedObjects ?? []
             } catch {
-                fatalError("Failed to fetch projects")
+                print("Failed to fetch projects")
             }
-        }
-
-        func addItem(to project: Project) {
-            let item = Item(context: persistenceController.container.viewContext)
-            item.project = project
-            item.creationDate = Date()
-            item.priority = 2
-            item.completed = false
-            persistenceController.save()
         }
 
         func addProject() {
@@ -60,14 +51,21 @@ extension ProjectsView {
             }
         }
 
+        func addItem(to project: Project) {
+            let item = Item(context: persistenceController.container.viewContext)
+            item.priority = 2
+            item.completed = false
+            item.project = project
+            item.creationDate = Date()
+            persistenceController.save()
+        }
+
         func delete(_ offsets: IndexSet, from project: Project) {
             let allItems = project.projectItems(using: sortOrder)
-
             for offset in offsets {
                 let item = allItems[offset]
                 persistenceController.delete(item)
             }
-
             persistenceController.save()
         }
 

@@ -1,6 +1,6 @@
 //
 //  CloudError.swift
-//  CloudError
+//  Peanut
 //
 //  Created by Adam on 9/14/21.
 //

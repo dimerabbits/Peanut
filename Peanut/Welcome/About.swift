@@ -1,6 +1,6 @@
 //
 //  About.swift
-//  About
+//  Peanut
 //
 //  Created by Adam on 9/4/21.
 //

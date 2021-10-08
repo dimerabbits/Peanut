@@ -1,6 +1,6 @@
 //
 //  SharedItem.swift
-//  SharedItem
+//  Peanut
 //
 //  Created by Adam on 9/3/21.
 //

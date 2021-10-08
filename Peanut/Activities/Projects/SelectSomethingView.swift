@@ -1,6 +1,6 @@
 //
 //  SelectSomethingView.swift
-//  SelectSomethingView
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //

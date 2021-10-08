@@ -1,6 +1,6 @@
 //
 //  ItemListView.swift
-//  ItemListView
+//  Peanut
 //
 //  Created by Adam on 9/1/21.
 //
@@ -22,45 +22,41 @@ struct ItemListView: View {
 
             ForEach(items) { item in
                 NavigationLink(destination: EditItemView(item: item)) {
-                    preview(for: item)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.itemTitle)
+                                .font(.subheadline)
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+
+                            if item.itemDetail.isEmpty == false {
+                                Text(item.itemDetail)
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
+                            }
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
+                            .font(Font.callout.weight(.bold))
+                            .foregroundColor(Color(item.project?.projectColor ?? "AccentColor"))
+                    }
+                    .padding()
+                    .background(Color.secondarySystemGroupedBackground)
+                    .cornerRadius(10)
+                    .shadow(radius: 1, y: 1)
                 }
             }
         }
-    }
-
-    func preview(for item: Item) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(item.itemTitle)
-                    .font(.subheadline)
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
-
-                if item.itemDetail.isEmpty == false {
-                    Text(item.itemDetail)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .lineLimit(1)
-                }
-            }
-
-            Spacer()
-
-            Image(systemName: "chevron.right")
-                .font(Font.callout.weight(.bold))
-                .foregroundColor(Color(item.project?.projectColor ?? "AccentColor"))
-        }
-        .padding()
-        .background(Color.secondarySystemGroupedBackground)
-        .cornerRadius(10)
-        .shadow(radius: 1, y: 1)
     }
 }
 
 struct ItemListView_Previews: PreviewProvider {
     static var previews: some View {
-        TodayView(persistenceController: .preview)
+        TodayView(persistenceController: PersistenceController.preview)
             .preferredColorScheme(.dark)
-        TodayView(persistenceController: .preview)
+        TodayView(persistenceController: PersistenceController.preview)
     }
 }

@@ -1,6 +1,6 @@
 //
 //  SharedProjectView.swift
-//  SharedProjectView
+//  Peanut
 //
 //  Created by Adam on 9/3/21.
 //
@@ -13,7 +13,6 @@ struct SharedProjectsView: View {
 
     @State private var projects = [SharedProject]()
     @State private var loadState = LoadState.inactive
-    @State private var isBusy = false
     @State private var cloudError: CloudError?
 
     var body: some View {
@@ -22,6 +21,8 @@ struct SharedProjectsView: View {
                 switch loadState {
                 case .inactive, .loading:
                     ProgressView()
+                case .noResults:
+                    Text("No results")
                 case .success:
                     List(projects) { project in
                         NavigationLink(destination: SharedItemsView(project: project)) {
@@ -33,14 +34,17 @@ struct SharedProjectsView: View {
                             }
                         }
                     }
-                case .noResults:
-                    Text("No results")
                 }
+            }
+            .alert(item: $cloudError) { error in
+                Alert(title: Text("There was an error"), message: Text(error.message))
             }
             .navigationTitle("Shared Projects")
         }
         .onAppear(perform: fetchSharedProjects)
     }
+
+    // MARK: - CloudKit
 
     func fetchSharedProjects() {
         guard loadState == .inactive else { return }
@@ -54,9 +58,10 @@ struct SharedProjectsView: View {
         let operation = CKQueryOperation(query: query)
         operation.desiredKeys = ["title", "detail", "owner", "closed"]
         operation.resultsLimit = 50
-
-        operation.recordMatchedBlock = { recordID, result in
+        operation.recordMatchedBlock = { record, result in
             switch result {
+            case .failure(let error):
+                cloudError = error.getCloudKitError()
             case .success(let record):
                 let id = record.recordID.recordName
                 let title = record["title"] as? String ?? "No title"
@@ -74,19 +79,18 @@ struct SharedProjectsView: View {
                 projects.append(sharedProject)
                 loadState = .success
 
-            case .failure(let error): self.cloudError =
-                error.getCloudKitError()
             }
         }
 
         operation.queryResultBlock = { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success: break
-                case .failure(let error): self.cloudError = error.getCloudKitError()
+                case .failure(let error):
+                    self.cloudError = error.getCloudKitError()
+                case .success:
+                    break
                 }
             }
-            self.isBusy = false
 
             if projects.isEmpty {
                 loadState = .noResults

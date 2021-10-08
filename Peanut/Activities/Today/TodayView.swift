@@ -1,6 +1,6 @@
 //
 //  TodayView.swift
-//  TodayView
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //
@@ -13,39 +13,18 @@ struct TodayView: View {
     static let tag: String? = "Today"
 
     @StateObject private var viewModel: ViewModel
-    @EnvironmentObject var persistenceController: PersistenceController
     @Environment(\.colorScheme) var colorScheme
+
+    var projectRows: [GridItem] { [GridItem(.fixed(130))] }
 
     init(persistenceController: PersistenceController) {
         let viewModel = ViewModel(persistenceController: persistenceController)
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
-    var projectRows: [GridItem] { [GridItem(.fixed(130))] }
-
     var body: some View {
         NavigationView {
             ScrollView {
-                if let item = viewModel.selectedItem {
-                    NavigationLink(
-                        destination: EditItemView(item: item),
-                        tag: item,
-                        selection: $viewModel.selectedItem,
-                        label: EmptyView.init
-                    )
-                    .id(item)
-                }
-
-                if let project = viewModel.selectedProject {
-                    NavigationLink(
-                        destination: EditProjectView(persistenceController: persistenceController, project: project),
-                        tag: project,
-                        selection: $viewModel.selectedProject,
-                        label: EmptyView.init
-                    )
-                    .id(project)
-                }
-
                 VStack(alignment: .leading) {
                     Text("**\(Date().formatted(date: .abbreviated, time: .omitted))**")
 
@@ -65,6 +44,27 @@ struct TodayView: View {
                     }
                 }
                 .padding(.horizontal)
+
+                if let item = viewModel.selectedItem {
+                    NavigationLink(
+                        destination: EditItemView(item: item),
+                        tag: item,
+                        selection: $viewModel.selectedItem,
+                        label: EmptyView.init
+                    )
+                        .id(item)
+                }
+
+                if let project = viewModel.selectedProject {
+                    NavigationLink(
+                        destination: EditProjectView(project: project),
+                        tag: project,
+                        selection: $viewModel.selectedProject,
+                        label: EmptyView.init
+                    )
+                        .id(project)
+                }
+
             }
             .background(Color.systemGroupedBackground.ignoresSafeArea())
             .navigationTitle("Today")
@@ -86,8 +86,8 @@ struct TodayView: View {
 
 struct TodayView_Previews: PreviewProvider {
     static var previews: some View {
-        TodayView(persistenceController: PersistenceController.preview)
-        TodayView(persistenceController: PersistenceController.preview)
+        TodayView(persistenceController: .preview)
+        TodayView(persistenceController: .preview)
             .preferredColorScheme(.dark)
     }
 }

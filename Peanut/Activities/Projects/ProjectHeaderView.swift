@@ -1,6 +1,6 @@
 //
 //  ProjectHeaderView.swift
-//  ProjectHeaderView
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //
@@ -9,26 +9,22 @@ import SwiftUI
 
 struct ProjectHeaderView: View {
     @ObservedObject var project: Project
-    @EnvironmentObject var persistenceController: PersistenceController
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .bottom) {
                 NavigationLink(
-                    destination: EditProjectView(
-                        persistenceController: persistenceController,
-                        project: project)
-                ) {
-                    Text("**\(project.projectTitle)**")
-                        .foregroundColor(Color(project.projectColor))
-                        .font(.subheadline)
-                        .lineLimit(1)
+                    destination: EditProjectView(project: project)) {
+                        Text("**\(project.projectTitle)**")
+                            .foregroundColor(Color(project.projectColor))
+                            .font(.subheadline)
+                            .lineLimit(1)
 
-                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                        .symbolRenderingMode(.hierarchical)
-                        .font(.callout)
-                        .foregroundColor(Color(project.projectColor))
-                }
+                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                            .symbolRenderingMode(.hierarchical)
+                            .font(.callout)
+                            .foregroundColor(Color(project.projectColor))
+                    }
             }
             ProgressView(value: project.completionAmount)
                 .accentColor(Color(project.projectColor))

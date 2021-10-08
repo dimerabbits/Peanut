@@ -1,6 +1,6 @@
 //
 //  Award.swift
-//  Award
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //

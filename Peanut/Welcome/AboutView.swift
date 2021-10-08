@@ -1,6 +1,6 @@
 //
 //  AboutView.swift
-//  AboutView
+//  Peanut
 //
 //  Created by Adam on 9/4/21.
 //

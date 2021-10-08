@@ -1,6 +1,6 @@
 //
 //  Feature.swift
-//  Feature
+//  Peanut
 //
 //  Created by Adam on 9/4/21.
 //

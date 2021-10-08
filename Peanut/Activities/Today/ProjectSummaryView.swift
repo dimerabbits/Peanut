@@ -1,6 +1,6 @@
 //
 //  ProjectSummaryView.swift
-//  ProjectSummaryView
+//  Peanut
 //
 //  Created by Adam on 9/1/21.
 //
@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ProjectSummaryView: View {
     @ObservedObject var project: Project
-    @EnvironmentObject var persistenceController: PersistenceController
 
     var body: some View {
-        NavigationLink(destination: EditProjectView(persistenceController: persistenceController, project: project)) {
+        NavigationLink(destination: EditProjectView(project: project)) {
             CustomProgressView(project: project)
         }
         .frame(width: 160)
@@ -26,7 +25,7 @@ struct ProjectSummaryView: View {
 
     func preview(for project: Project) -> some View {
         VStack(alignment: .center) {
-            CustomProgressView(project: project)
+            CustomProgressView(project: Project.example)
         }
     }
 }

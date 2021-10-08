@@ -1,6 +1,6 @@
 //
 //  ProductView.swift
-//  ProductView
+//  Peanut
 //
 //  Created by Adam on 9/2/21.
 //

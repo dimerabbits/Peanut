@@ -1,6 +1,6 @@
 //
 //  EditItemView.swift
-//  EditItemView
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //
@@ -62,6 +62,7 @@ struct EditItemView: View {
 
             Section(header: NotesHeaderView()) {
                 TextEditor(text: $note.onChange(update))
+                    .frame(minHeight: 200)
                     .foregroundColor(Color.gray)
                     .font(.custom("HelveticaNeue", size: 16))
                     .multilineTextAlignment(.leading)

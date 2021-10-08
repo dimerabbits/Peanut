@@ -1,6 +1,6 @@
 //
 //  ItemRowViewModel.swift
-//  ItemRowViewModel
+//  Peanut
 //
 //  Created by Adam on 9/5/21.
 //
@@ -12,19 +12,13 @@ extension ItemRowView {
         let project: Project
         let item: Item
 
-        var title: String {
-            item.itemTitle
-        }
-
         var icon: String {
             if item.completed {
-                return "checkmark.circle.fill"
+                return "checkmark.circle"
             } else if item.priority == 3 {
-                return "arrowtriangle.up.circle"
-            } else if item.priority == 1 {
-                return "arrowtriangle.down.circle"
+                return "exclamationmark.triangle"
             } else {
-                return "checkmark.circle.fill"
+                return "checkmark.circle"
             }
         }
 
@@ -32,8 +26,6 @@ extension ItemRowView {
             if item.completed {
                 return project.projectColor
             } else if item.priority == 3 {
-                return project.projectColor
-            } else if item.priority == 1 {
                 return project.projectColor
             } else {
                 return nil
@@ -45,11 +37,13 @@ extension ItemRowView {
                 return "\(item.itemTitle), completed."
             } else if item.priority == 3 {
                 return "\(item.itemTitle), high priority."
-            } else if item.priority == 1 {
-                return "\(item.itemTitle), low priority."
             } else {
                 return item.itemTitle
             }
+        }
+
+        var title: String {
+            item.itemTitle
         }
 
         init(project: Project, item: Item) {

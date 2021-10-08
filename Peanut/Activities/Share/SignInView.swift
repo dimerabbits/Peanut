@@ -1,6 +1,6 @@
 //
 //  SignInView.swift
-//  SignInView
+//  Peanut
 //
 //  Created by Adam on 9/3/21.
 //
@@ -24,12 +24,12 @@ struct SignInView: View {
             switch status {
             case .unknown:
                 VStack {
-                    VStack(spacing: 45) {
+                    VStack(spacing: 30) {
+                        Spacer(minLength: 30)
                         Text("**Please Sign In**")
                             .multilineTextAlignment(.center)
                             .font(.largeTitle)
                             .shadow(radius: 1, y: 1)
-                            .padding()
 
                         ForEach(Share.allShare) { share in
                             HStack(alignment: .center, spacing: 1) {
@@ -40,7 +40,7 @@ struct SignInView: View {
                                     .foregroundColor(.accentColor)
                                     .accessibilityHidden(true)
 
-                                VStack(alignment: .leading) {
+                                VStack(alignment: .leading, spacing: 2) {
                                     Text(share.title)
                                         .font(.headline)
 
@@ -52,14 +52,13 @@ struct SignInView: View {
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                        .padding(.top)
+                        Spacer(minLength: 100)
                     }
 
-                    Spacer()
-
                     Button("Cancel", action: close)
-                        .frame(maxWidth: .infinity)
-                        .font(.subheadline)
                         .padding()
+                        .font(.footnote)
 
                     SignInWithAppleButton(onRequest: configureSignIn, onCompletion: completeSignIn)
                         .frame(height: 44)

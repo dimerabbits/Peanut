@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreSpotlight
+import CloudKit
 
 struct ContentView: View {
     private let newProjectActivity = "com.adam.Peanut.newProject"

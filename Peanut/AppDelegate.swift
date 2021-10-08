@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  AppDelegate
+//  Peanut
 //
 //  Created by Adam on 9/2/21.
 //

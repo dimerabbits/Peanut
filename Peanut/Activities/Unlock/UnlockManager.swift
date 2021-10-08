@@ -1,6 +1,6 @@
 //
 //  UnlockManager.swift
-//  UnlockManager
+//  Peanut
 //
 //  Created by Adam on 9/2/21.
 //

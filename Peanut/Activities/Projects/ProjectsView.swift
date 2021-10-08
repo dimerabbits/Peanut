@@ -1,6 +1,6 @@
 //
 //  ProjectsView.swift
-//  ProjectsView
+//  Peanut
 //
 //  Created by Adam on 8/31/21.
 //
@@ -13,7 +13,6 @@ struct ProjectsView: View {
     static let closedTag: String? = "Closed"
 
     @StateObject private var viewModel: ViewModel
-
     @State private var showingSortOrder = false
 
     init(persistenceController: PersistenceController, showClosedProjects: Bool) {
@@ -49,6 +48,7 @@ struct ProjectsView: View {
         .sheet(isPresented: $viewModel.showingUnlockView) {
             UnlockView()
         }
+//        .searchable(text: $searchText)
     }
 
     var projectsList: some View {
@@ -111,6 +111,7 @@ struct ProjectsView: View {
 
 struct ProjectsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectsView(persistenceController: PersistenceController.preview, showClosedProjects: false)
+        ProjectsView(persistenceController: PersistenceController.preview,
+                     showClosedProjects: false)
     }
 }
