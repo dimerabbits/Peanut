@@ -1,5 +1,5 @@
 # Peanut
-**Copyright (c) 2021 Adam Herring
+Copyright (c) 2021 Adam Herring
 
 
 ## Source code
