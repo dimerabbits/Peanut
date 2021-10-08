@@ -4,9 +4,7 @@
 
 ## Source code
 
-All the source code that goes into Peanut is licensed under the MIT license. Distinctly, this is any file that has the “.swift” file extension. Here is the MIT License:
-
-Copyright (c) 2021 Adam Herring
+All the source code that goes into Peanut is licensed under the MIT license:
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -17,9 +15,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Content
 
-All the *assets* for Peanut – any JSON, PDFs, PNGs, HTML, movies, and so on, are *not* licensed under the MIT license, which means you aren’t able to redistribute them.
+All the *assets* for Peanut (JSON, PDFs, PNGs, HTML, movies, etc…) are *not* licensed under the MIT license, which means you aren’t able to redistribute them.
 
-- If a file has the extension “.swift” – i.e., if it gets compiled and run as part of the executable program – then it’s under the MIT license. You can take it, modify it, re-use it, distribute it, sell it, etc.
+- If a file has the extension “.swift” you can take it, modify it, re-use it, distribute it, sell it, etc.
 - All other files are there for your reference so you can see how the app works, but please do not redistribute them in any form.
 
-If you have questions or suggestions please get in touch: I’m [@dimerabbits on Twitter](https://twitter.com/dimerabbits), or you can email <adam@dimerabbits.com>.
+Have questions or suggestions, please reach out to me at [@dimerabbits on Twitter](https://twitter.com/dimerabbits), or you can email me at <adam@dimerabbits.com>.

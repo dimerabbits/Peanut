@@ -171,6 +171,7 @@
 		664963E72710D0AF00449694 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		664A01C2270C827600754B43 /* View-hideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-hideKeyboard.swift"; sourceTree = "<group>"; };
 		664A01C5270CAF2200754B43 /* Error-getCloudKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error-getCloudKitError.swift"; sourceTree = "<group>"; };
+		66511E642710EACC004230D8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		666DC56326E1BCED0001257D /* Persistence-StoreKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence-StoreKit.swift"; sourceTree = "<group>"; };
 		6679546026F11E7F0045EA95 /* CloudError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudError.swift; sourceTree = "<group>"; };
 		668E631126FD1BA600114C02 /* NotesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesHeaderView.swift; sourceTree = "<group>"; };
@@ -268,6 +269,7 @@
 		664407AF26DECE7B00E3C21E = {
 			isa = PBXGroup;
 			children = (
+				66511E642710EACC004230D8 /* README.md */,
 				664963E72710D0AF00449694 /* LICENSE.md */,
 				664407BA26DECE7B00E3C21E /* Peanut */,
 				664407D026DECE7C00E3C21E /* PeanutTests */,
