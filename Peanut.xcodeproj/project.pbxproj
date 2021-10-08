@@ -168,6 +168,7 @@
 		6645BD3126E2B55F00A8428F /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		6645BD3326E2B5A600A8428F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		6649176726E581DE00B64CE5 /* ItemRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowViewModel.swift; sourceTree = "<group>"; };
+		664963E72710D0AF00449694 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		664A01C2270C827600754B43 /* View-hideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-hideKeyboard.swift"; sourceTree = "<group>"; };
 		664A01C5270CAF2200754B43 /* Error-getCloudKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error-getCloudKitError.swift"; sourceTree = "<group>"; };
 		666DC56326E1BCED0001257D /* Persistence-StoreKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence-StoreKit.swift"; sourceTree = "<group>"; };
@@ -267,6 +268,7 @@
 		664407AF26DECE7B00E3C21E = {
 			isa = PBXGroup;
 			children = (
+				664963E72710D0AF00449694 /* LICENSE.md */,
 				664407BA26DECE7B00E3C21E /* Peanut */,
 				664407D026DECE7C00E3C21E /* PeanutTests */,
 				664407DA26DECE7C00E3C21E /* PeanutUITests */,
