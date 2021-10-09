@@ -20,7 +20,7 @@ struct ProjectHeaderView: View {
                             .font(.subheadline)
                             .lineLimit(1)
 
-                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                        Image(systemName: "ellipsis.circle")
                             .symbolRenderingMode(.hierarchical)
                             .font(.callout)
                             .foregroundColor(Color(project.projectColor))
