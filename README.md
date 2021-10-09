@@ -96,4 +96,4 @@ Learning from [Paul Hudson](https://www.hackingwithswift.com).
 
 ## License
 
-Peanut is MIT licensed, as found in the [LICENSE](/LICENSE) file.
+Peanut is MIT licensed, as found in the [LICENSE.md](/LICENSE) file.
