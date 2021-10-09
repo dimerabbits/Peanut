@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://static.wixstatic.com/media/029b8f_fafd6774eed44a439f49208100c24c66~mv2.png" alt="logo" width="20%"/>
+</p>
 <h1 align="center">
   Peanut
 </h1>
@@ -11,7 +14,7 @@
     </a>
 </p>
 <p align="center">
-  Peanut is an orginizational application focusing on user customization whithin a simple interface.
+  Peanut is an organizational application focusing on user customization within a simple interface.
 </p>
 
 
@@ -19,7 +22,6 @@
 
 - [Featuring](#featuring)
 - [Architecture](#architecture)
-- [Contributing to Flipper](#contributing-to-flipper)
 - [System Integrations](#system-integrations)
 - [Additional Coaching Points](#additional-coaching-points)
 - [Credits](#credits)
@@ -68,8 +70,10 @@
 
 - FocusState - keyboard label, prioritization.
 - Custom TextField (clear functionality)
+- 
 - Markdown with String interpolation.
 - "note" data model attribute (TextEditor)
+- CKQueryOperation deprecated fix (recordsMatchedBlock, queryResultBlock, 
 - Rendering Markdown content within text.
 - Navigating ProjectSummary
 - List/ForEach from bindings
@@ -81,7 +85,7 @@
 - Shadows and glows (inner, raised)
 - NotesHeader - dismissing TextEditor
 - DatePicker - graphical
-- onDelete, task,
+- onDelete, task
 - result in, switch…  
 - Dismissing keyboard in TextEditor
 
@@ -93,4 +97,4 @@ Learning from [Paul Hudson](https://www.hackingwithswift.com).
 
 ## License
 
-Peanut is MIT licensed, as found in the [LICENSE](/LICENSE) file.
+Peanut is MIT licensed, as found in the [LICENSE.md](/LICENSE) file.
