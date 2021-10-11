@@ -70,24 +70,24 @@
 ## Taking it further…
 
 - FocusState - keyboard label, prioritization.
-- Custom TextField (clear functionality)
+- Custom TextField (clear functionality).
 - Markdown with String interpolation.
-- "note" data model attribute (TextEditor)
-- CKQueryOperation deprecated fix (recordsMatchedBlock, queryResultBlock, 
+- "note" data model attribute (TextEditor).
+- CKQueryOperation deprecated fix (recordsMatchedBlock, queryResultBlock). 
 - Rendering Markdown content within text.
-- Navigating ProjectSummary
-- List/ForEach from bindings
-- enabling text selection
+- Navigating ProjectSummary.
+- List/ForEach from bindings.
+- Enabling text selection.
 - Adjusting list row seperator, visibility, and color.
 - WelcomeView - Features, About Peanut & Privacy, json decodable.
 - AboutView - Insettable Edge. Scrollable with formatting and confirmation.
 - ProgressTiled - Project Summary on TodayView using guage meter.
-- Shadows and glows (inner, raised)
-- NotesHeader - dismissing TextEditor
-- DatePicker - graphical
-- onDelete, task
-- result in, switch…  
-- Dismissing keyboard in TextEditor
+- Shadows and glows (inner, raised).
+- NotesHeader - dismissing TextEditor.
+- DatePicker - graphical.
+- onDelete, task.
+- Result in, switch…  
+- Dismissing keyboard in TextEditor.
 
 
 ## Credits
