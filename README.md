@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://static.wixstatic.com/media/029b8f_fafd6774eed44a439f49208100c24c66~mv2.png" alt="logo" width="20%"/>
+  <img src="https://static.wixstatic.com/media/029b8f_24382ea7f2214725a05730f20133895a~mv2.png/v1/fill/w_720,h_720,al_c,usm_0.66_1.00_0.01/roundedRecPeanut.png" alt="logo" width="20%"/>
 </p>
 <h1 align="center">
   Peanut
@@ -24,6 +24,7 @@
 - [Architecture](#architecture)
 - [System Integrations](#system-integrations)
 - [Additional Coaching Points](#additional-coaching-points)
+- [Taking it further…](#taking-it-further)
 - [Credits](#credits)
 - [License](#license)
 
@@ -70,7 +71,6 @@
 
 - FocusState - keyboard label, prioritization.
 - Custom TextField (clear functionality)
-- 
 - Markdown with String interpolation.
 - "note" data model attribute (TextEditor)
 - CKQueryOperation deprecated fix (recordsMatchedBlock, queryResultBlock, 
@@ -97,4 +97,4 @@ Learning from [Paul Hudson](https://www.hackingwithswift.com).
 
 ## License
 
-Peanut is MIT licensed, as found in the [LICENSE.md](/LICENSE) file.
+Peanut is MIT licensed, as found in the [LICENSE](/LICENSE) file.
