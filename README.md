@@ -24,7 +24,7 @@
 - [Architecture](#architecture)
 - [System Integrations](#system-integrations)
 - [Additional Coaching Points](#additional-coaching-points)
-- [Taking it further…](#taking-it-further)
+- [Taking it Further…](#taking-it-further)
 - [Credits](#credits)
 - [License](#license)
 
@@ -67,7 +67,7 @@
 - Testing (Unit & UI) - Measuring performance, setting benchmarks.
 
 
-## Taking it further…
+## Taking it Further…
 
 - FocusState - keyboard label, prioritization.
 - Custom TextField (clear functionality)
