@@ -6,6 +6,7 @@
 </h1>
 </p>
 <p align="center">
+      <a href="https://www.apple.com/ios/ios-15/">
         <img src="https://img.shields.io/badge/iOS-15.0+-important.svg" />
     <a href="https://swift.org/download/">
         <img src="https://img.shields.io/badge/swift-5.5-orange.svg?style=flat" alt="Language Swift 5.5" />
