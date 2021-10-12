@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Dynamic Organization",
+        "description": "Handle multiple projects at once by setting reminders, prioritization, sorting, and your choice of color scheme.",
+        "image": "folder.badge.gearshape"
+    },
+    {
+        "title": "Track Productivity",
+        "description": "Keep a close eye on your progress to ensure there is never a deadline missed. Utilize Peanut to meet the goals specific to your work.",
+        "image": "chart.line.uptrend.xyaxis"
+    },
+    {
+        "title": "Sharing",
+        "description": "Post comments to share updates and engage with team members to inspire new ideas.",
+        "image": "bubble.left.and.exclamationmark.bubble.right"
+    },
+]

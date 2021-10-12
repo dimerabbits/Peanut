@@ -48,7 +48,6 @@ struct ProjectsView: View {
         .sheet(isPresented: $viewModel.showingUnlockView) {
             UnlockView()
         }
-//        .searchable(text: $searchText)
     }
 
     var projectsList: some View {

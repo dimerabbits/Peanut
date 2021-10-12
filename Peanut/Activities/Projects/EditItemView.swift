@@ -41,7 +41,7 @@ struct EditItemView: View {
                     .focused($focusedField, equals: .itemName)
                     .submitLabel(.next)
 
-                CustomTextField("Description", text: $detail.onChange(update))
+                CustomTextField("Item Description", text: $detail.onChange(update))
                     .focused($focusedField, equals: .itemDescription)
                     .submitLabel(.done)
             }

@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Comunidad privada",
+        "description": "Para mantener a nuestra comunidad segura, le pedimos que inicie sesión antes de comentar sobre un proyecto.",
+        "image": "person.3.sequence"
+    },
+    {
+        "title": "No se recopilaron datos",
+        "description": "No rastreamos su información personal; su nombre se utiliza únicamente con fines de visualización.",
+        "image": "folder.badge.minus"
+    },
+    {
+        "title": "Seguro",
+        "description": "Tenga en cuenta: nos reservamos el derecho de eliminar los mensajes que sean inapropiados u ofensivos.",
+        "image": "checkerboard.shield"
+    },
+]

@@ -56,7 +56,7 @@ struct EditProjectView: View {
     var body: some View {
         Form {
             Section {
-                CustomTextField("Project name", text: $title.onChange(update))
+                CustomTextField("Project Name", text: $title.onChange(update))
                     .focused($focusedField, equals: .projectName)
                     .submitLabel(.next)
 
@@ -64,7 +64,7 @@ struct EditProjectView: View {
                     .focused($focusedField, equals: .projectDescription)
                     .submitLabel(.done)
 
-                Toggle("Show reminders", isOn: $remindMe.animation().onChange(update))
+                Toggle("Show Reminders", isOn: $remindMe.animation().onChange(update))
                     .confirmationDialog(
                         "There was a problem. Please check you have notifications enabled.",
                         isPresented: $showingNotificationError,
@@ -74,7 +74,7 @@ struct EditProjectView: View {
                     }
 
                 if remindMe {
-                    DatePicker("Reminder time",
+                    DatePicker("Reminder Time",
                                selection: $reminderTime.onChange(update),
                                displayedComponents: [.hourAndMinute, .date])
                         .datePickerStyle(.graphical)

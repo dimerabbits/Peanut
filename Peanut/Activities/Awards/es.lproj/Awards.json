@@ -1,159 +1,159 @@
 [
     {
-        "name": "Supporter",
-        "description": "You bought the premium unlock.",
+        "name": "Seguidor",
+        "description": "Compraste el desbloqueo premium.",
         "color": "aw0",
         "criterion": "unlock",
         "value": 0,
         "image": "dollarsign.square.fill"
     },
     {
-        "name": "First Steps",
-        "description": "Add your first item.",
+        "name": "Primeros pasos",
+        "description": "Agrega tu primer artículo.",
         "color": "aw1",
         "criterion": "items",
         "value": 1,
         "image": "figure.walk"
     },
     {
-        "name": "Checking Boxes",
-        "description": "Complete your first item.",
+        "name": "Casillas de verificación",
+        "description": "Completa tu primer artículo.",
         "color": "aw1",
         "criterion": "complete",
         "value": 1,
         "image": "checkmark.shield.fill"
     },
     {
-        "name": "First Message",
-        "description": "You posted your first message to the group chat.",
+        "name": "Primer mensaje",
+        "description": "Publicó su primer mensaje en el chat grupal.",
         "color": "aw1",
         "criterion": "chat",
         "value": 1,
         "image": "person.fill"
     },
     {
-        "name": "A Great Start",
-        "description": "Add 10 item.",
+        "name": "Un gran comienzo",
+        "description": "Agregue 10 artículos.",
         "color": "aw2",
         "criterion": "items",
         "value": 10,
         "image": "hand.thumbsup.fill"
     },
     {
-        "name": "Rocking it",
-        "description": "Complete 10 items.",
+        "name": "Meciéndolo",
+        "description": "Completa 10 artículos.",
         "color": "aw2",
         "criterion": "complete",
         "value": 10,
         "image": "guitars.fill"
     },
     {
-        "name": "Frequent Chatter",
-        "description": "You've posted 10 messages to the group chat.",
+        "name": "Charla frecuente",
+        "description": "Ha publicado 10 mensajes en el chat grupal.",
         "color": "aw2",
         "criterion": "chat",
         "value": 10,
         "image": "message.fill"
     },
     {
-        "name": "Moving On Up",
-        "description": "Add 20 items.",
+        "name": "Continuando para arriba",
+        "description": "Agregue 20 artículos.",
         "color": "aw3",
         "criterion": "items",
         "value": 20,
         "image": "tray.and.arrow.up.fill"
     },
     {
-        "name": "20 is Plenty",
-        "description": "Complete 20 items.",
+        "name": "20 es suficiente",
+        "description": "Completa 20 artículos.",
         "color": "aw3",
         "criterion": "complete",
         "value": 20,
         "image": "20.square.fill"
     },
     {
-        "name": "Gathering Speed",
-        "description": "Add 50 items.",
+        "name": "Recolección de velocidad",
+        "description": "Agregue 50 artículos.",
         "color": "aw4",
         "criterion": "items",
         "value": 50,
         "image": "speedometer"
     },
     {
-        "name": "Bullseye!",
-        "description": "Complete 50 items.",
+        "name": "¡Diana!",
+        "description": "Completa 50 artículos.",
         "color": "aw4",
         "criterion": "complete",
         "value": 50,
         "image": "target"
     },
     {
-        "name": "Making Waves",
-        "description": "Add 100 items.",
+        "name": "Haciendo olas",
+        "description": "Agregue 100 artículos.",
         "color": "aw5",
         "criterion": "items",
         "value": 100,
         "image": "dot.radiowaves.left.and.right"
     },
     {
-        "name": "Flying High",
-        "description": "Complete 100 items.",
+        "name": "Volando alto",
+        "description": "Completa 100 artículos.",
         "color": "aw5",
         "criterion": "complete",
         "value": 100,
         "image": "airplane.circle.fill"
     },
     {
-        "name": "Community Powerhouse",
-        "description": "You've posted 100 messages to the group chat.",
+        "name": "Potencia comunitaria",
+        "description": "Ha publicado 100 mensajes en el chat grupal.",
         "color": "aw5",
         "criterion": "chat",
         "value": 100,
         "image": "arrow.up.heart.fill"
     },
     {
-        "name": "High Performer",
-        "description": "Add 250 items.",
+        "name": "Alto desempeño",
+        "description": "Agregue 250 artículos.",
         "color": "aw6",
         "criterion": "items",
         "value": 250,
         "image": "square.stack.3d.up.fill"
     },
     {
-        "name": "You're On Fire!",
-        "description": "Complete 250 items.",
+        "name": "¡Estás que ardes!",
+        "description": "Completa 250 artículos.",
         "color": "aw6",
         "criterion": "complete",
         "value": 250,
         "image": "flame.fill"
     },
     {
-        "name": "Star Performer",
-        "description": "Add 500 items.",
+        "name": "Intérprete estrella",
+        "description": "Agregue 500 artículos.",
         "color": "aw7",
         "criterion": "items",
         "value": 500,
         "image": "star.circle.fill"
     },
     {
-        "name": "Box Ticker in Chief",
-        "description": "Complete 500 items.",
+        "name": "Verificador de caja en jefe",
+        "description": "Completa 500 artículos.",
         "color": "aw7",
         "criterion": "complete",
         "value": 500,
         "image": "text.badge.checkmark"
     },
     {
-        "name": "Champion Performer",
-        "description": "Add 1000 items.",
+        "name": "Campeón Artista",
+        "description": "Agregue 1000 artículos.",
         "color": "aw8",
         "criterion": "items",
         "value": 1000,
         "image": "crown.fill"
     },
     {
-        "name": "Boom!",
-        "description": "Complete 1000 items.",
+        "name": "¡Auge!",
+        "description": "Completa 1000 artículos.",
         "color": "aw8",
         "criterion": "complete",
         "value": 1000,

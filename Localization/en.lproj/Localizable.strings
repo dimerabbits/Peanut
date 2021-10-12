@@ -1,0 +1,110 @@
+/* 
+  Localizable.strings
+  Peanut
+
+  Created by Adam on 10/12/21.
+  
+*/
+
+/* TESTING */
+"Reset Data" = "Reset Data";
+
+/* GENERAL PURPOSE */
+"Delete" = "Delete";
+"OK" = "OK";
+
+/* TABS */
+"Today" = "Today";
+"Open" = "Open";
+"Closed" = "Closed";
+"Awards" = "Awards";
+"Share" = "Share";
+
+/* WELCOME */
+"**Welcome to Peanut**" = "**Welcome to Peanut**";
+"About Peanut & Privacy…" = "About Peanut & Privacy…";
+"Continue" = "Continue";
+
+/* ABOUT */
+"Done" = "Done";
+"Peanut & Privacy" = "Peanut & Privacy";
+
+/* TODAY */
+"Up next" = "Up next";
+"More to explore" = "More to explore";
+
+/* OPEN/CLOSED PROJECTS */
+"Open Projects" = "Open Projects";
+"Closed Projects" = "Closed Projects";
+"Add Project" = "Add Project";
+"Add New Item" = "Add New Item";
+"Create a new item" = "Create a new item";
+/* A button that shows a menu with the following items */
+"Sort" = "Sort";
+"Sort items" = "Sort items"; /* title of the menu*/
+"Optimized" = "Optimized"; /* Sort using an optimized algorithm */
+"Creation Date" = "Creation Date"; /* Sort by the date the items were created */
+"Title" = "Title"; /* Sort by item title */
+/* Editing Projects and Items */
+"Project Color" = "Project Color";
+"Notes" = "Notes";
+"New Project" = "New Project";
+"Edit Project" = "Edit Project";
+"Project Description" = "Project Description";
+"Project Name" = "Project Name";
+"Create a new project" = "Create a new project";
+"Show Reminders" = "Show Reminders";
+"Close" = "Close";
+"Reopen" = "Reopen";
+"Permanently erase this project and all of it's items?" = "Permanently erase this project and all of it's items?";
+/* Item Priority Picker */
+"Low" = "Low";
+"Medium" = "Medium";
+"High" = "High";
+"New Item" = "New Item";
+"Edit Item" = "Edit Item";
+"Mark Completed" = "Mark Completed";
+"Item Description" = "Item Description";
+"Item Name" = "Item Name";
+
+/* AWARDS */
+"Unlocked: %@" = "Unlocked: %@";
+"Locked" = "Locked";
+
+/* SHARE */
+"Chat about this project…" = "Chat about this project…";
+"Shared Projects" = "Shared Projects";
+"Enter Message" = "Enter Message";
+"Sign in to Comment" = "Sign in to Comment";
+"Cancel" = "Cancel";
+/* Cloud Errors */
+"An unknown error occurred: %@" = "An unknown error occurred: %@";
+"A fatal error occurred: %@" = "A fatal error occurred: %@";
+"There was a problem communicating with iCloud; please check your network connection and try again." = "There was a problem communicating with iCloud; please check your network connection and try again.";
+"There was a problem with your iCloud account; please check that you're logged in to iCloud." = "There was a problem with your iCloud account; please check that you're logged in to iCloud.";
+"You've hit iCloud's rate limit; please wait a moment then try again." = "You've hit iCloud's rate limit; please wait a moment then try again.";
+"You've exceeded your iCloud quota; please clear up some space then try again." = "You've exceeded your iCloud quota; please clear up some space then try again.";
+"An unknown error occurred: %@" = "An unknown error occurred: %@";
+
+/* UNLOCK */
+"**Please Sign In**" = "**Please Sign In**";
+"**%@**" = "**%@**";
+"**%@**: %@" = "**%1$@**: %2$@";
+"Buy: %@" = "Buy: %@";
+"Restore Purchases" = "Restore Purchases";
+"There was an error" = "There was an error";
+"There's nothing here wight now" = "There's nothing here wight now";
+"Loading…" = "Loading…";
+"No results" = "No results";
+"Sorry, there was an error %@" = "Sorry, there was an error %@";
+"Sorry, there was an error." = "Sorry, there was an error.";
+"There was an error" = "There was an error";
+"You are all set!" = "You are all set!";
+"**Unlock Unlimited Projects**" = "**Unlock Unlimited Projects**";
+"Sorry, there was an error loading the store. Please try again later." = "Sorry, there was an error loading the store. Please try again later.";
+"Thank you!" = "Thank you!";
+"Thank you! Your request is pending approval, but you can carry on using the app in the meantime." = "Thank you! Your request is pending approval, but you can carry on using the app in the meantime.";
+"You can add three projects for free, or pay %@ to add unlimited projects.\n\nIf you already bought the unlock on another device, press Restore Purchases." = "You can add three projects for free, or pay %@ to add unlimited projects.\n\nIf you already bought the unlock on another device, press Restore Purchases.";
+
+/* OTHERS */
+"*Select something to get started…*" = "*Select something to get started…*";

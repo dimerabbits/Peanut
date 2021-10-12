@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomTextField: View {
 
-  let title: String
+  let title: LocalizedStringKey
 
   @Binding var text: String
   @State private var isEditing: Bool = false
@@ -18,7 +18,7 @@ struct CustomTextField: View {
     return self.isEditing && !self.text.isEmpty
   }
 
-  init(_ title: String, text: Binding<String>) {
+  init(_ title: LocalizedStringKey, text: Binding<String>) {
     self.title = title
     self._text = text
   }

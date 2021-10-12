@@ -11,8 +11,13 @@
       "localizations" : [
         {
           "description" : "",
-          "displayName" : "",
+          "displayName" : "Unlock Unlimited Projects",
           "locale" : "en_US"
+        },
+        {
+          "description" : "",
+          "displayName" : "Desbloquear proyectos ilimitad",
+          "locale" : "es_MX"
         }
       ],
       "productID" : "com.adam.Peanut.unlock",

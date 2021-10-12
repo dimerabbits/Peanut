@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Organización dinámica",
+        "description": "Maneje múltiples proyectos a la vez configurando recordatorios, priorización, clasificación y su elección de esquema de color.",
+        "image": "folder.badge.gearshape"
+    },
+    {
+        "title": "Seguimiento de la productividad",
+        "description": "Esté atento a su progreso para asegurarse de que nunca se pierda una fecha límite. Utilice Peanut para alcanzar los objetivos específicos de su trabajo.",
+        "image": "chart.line.uptrend.xyaxis"
+    },
+    {
+        "title": "Intercambio",
+        "description": "Publique comentarios para compartir actualizaciones e interactúe con los miembros del equipo para inspirar nuevas ideas.",
+        "image": "bubble.left.and.exclamationmark.bubble.right"
+    },
+]

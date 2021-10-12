@@ -15,7 +15,7 @@ struct ProductView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
-                Text("**Get Unlimited Projects**")
+                Text("**Unlock Unlimited Projects**")
                     .font(.headline)
                     .padding(.top)
                     .shadow(radius: 1, y: 1)

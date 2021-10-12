@@ -1,0 +1,110 @@
+/* 
+  Localizable.strings
+  Peanut
+
+  Created by Adam on 10/12/21.
+  
+*/
+
+/* TESTING */
+"Reset Data" = "Reiniciar datos";
+
+/* GENERAL PURPOSE */
+"Delete" = "Borrar";
+"OK" = "OK";
+
+/* TABS */
+"Today" = "Hoy";
+"Open" = "Abierto";
+"Closed" = "Cerrado";
+"Awards" = "Premios";
+"Share" = "Aportación";
+
+/* WELCOME */
+"**Welcome to Peanut**" = "**Bienvenido a Cacahuete**";
+"About Peanut & Privacy…" = "Acerca del Cacahuete y la privacidad…";
+"Continue" = "Continuar";
+
+/* ABOUT */
+"Done" = "Hecho";
+"Peanut & Privacy" = "Cacahuete y privacidad";
+
+/* TODAY */
+"Up next" = "Arriba a continuación";
+"More to explore" = "Más para explorar";
+
+/* OPEN/CLOSED PROJECTS */
+"Open Projects" = "Proyectos abiertos";
+"Closed Projects" = "Proyectos cerrados";
+"Add Project" = "Agregar proyecto";
+"Add New Item" = "Agregar artículo nuevo";
+"Create a new item" = "Crea un artículo nuevo";
+/* A button that shows a menu with the following items */
+"Sort" = "Ordenar";
+"Sort items" = "Ordenar artículos"; /* title of the menu*/
+"Optimized" = "Optimizado"; /* Sort using an optimized algorithm */
+"Creation Date" = "Fecha de creación"; /* Sort by the date the items were created */
+"Title" = "Título"; /* Sort by item title */
+/* Editing Projects and Items */
+"Project Color" = "Color del proyecto";
+"Notes" = "Notas";
+"New Project" = "Nuevo proyecto";
+"Edit Project" = "Editar proyecto";
+"Project Description" = "Descripción del Proyecto";
+"Project Name" = "Nombre del proyecto";
+"Create a new project" = "Crea un nuevo proyecto";
+"Show Reminders" = "Mostrar recordatorios";
+"Close" = "Cerrar";
+"Reopen" = "Reabrir";
+"Permanently erase this project and all of it's items?" = "¿Borrar de forma permanente este proyecto y todos sus elementos?";
+/* Item Priority Picker */
+"Low" = "Bajo";
+"Medium" = "Medio";
+"High" = "Alto";
+"New Item" = "Nuevo artículo";
+"Edit Item" = "Editar artículo";
+"Mark Completed" = "Marcar como completado";
+"Item Description" = "Descripción del Artículo";
+"Item Name" = "Nombre del árticulo";
+
+/* AWARDS */
+"Unlocked: %@" = "Desbloqueado: %@";
+"Locked" = "Bloqueado";
+
+/* SHARE */
+"Chat about this project…" = "Charla sobre este proyecto…";
+"Shared Projects" = "Proyectos compartidos";
+"Enter Message" = "Ingrese mensaje";
+"Sign in to Comment" = "Iniciar sesión para comentar";
+"Cancel" = "Cancelar";
+/* Cloud Errors */
+"An unknown error occurred: %@" = "Un error desconocido ocurrió: %@";
+"A fatal error occurred: %@" = "Ocurrió un error fatal: %@";
+"There was a problem communicating with iCloud; please check your network connection and try again." = "Hubo un problema al comunicarse con iCloud; compruebe su conexión de red y vuelva a intentarlo.";
+"There was a problem with your iCloud account; please check that you're logged in to iCloud." = "Hubo un problema con tu cuenta de iCloud; compruebe que ha iniciado sesión en iCloud.";
+"You've hit iCloud's rate limit; please wait a moment then try again." = "Has alcanzado el límite de velocidad de iCloud; Espere un momento y vuelva a intentarlo.";
+"You've exceeded your iCloud quota; please clear up some space then try again." = "Has excedido tu cuota de iCloud; Por favor, aclare algo de espacio y vuelva a intentarlo.";
+"An unknown error occurred: %@" = "Un error desconocido ocurrió: %@";
+
+/* UNLOCK */
+"**Please Sign In**" = "**Por favor, registrese**";
+"**%@**" = "**%@**";
+"**%@**: %@" = "**%1$@**: %2$@";
+"Buy: %@" = "Comprar: %@";
+"Restore Purchases" = "Restaurar las compras";
+"There was an error" = "Hubo un error";
+"There's nothing here wight now" = "No hay nada aquí, ahora";
+"Loading…" = "Cargando…";
+"No results" = "No hay resultados";
+"Sorry, there was an error %@" = "Lo sentimos, ha habido un error %@";
+"Sorry, there was an error." = "Lo sentimos, ha habido un error.";
+"There was an error" = "Hubo un error";
+"You are all set!" = "¡Estás listo!";
+"**Unlock Unlimited Projects**" = "**Desbloquear proyectos ilimitados**";
+"Sorry, there was an error loading the store. Please try again later." = "Lo siento, hubo un error al cargar la tienda. Por favor, inténtelo de nuevo más tarde.";
+"Thank you!" = "¡Gracias!";
+"Thank you! Your request is pending approval, but you can carry on using the app in the meantime." = "¡Gracias! Su solicitud está pendiente de aprobación, pero puede seguir usando la aplicación mientras tanto.";
+"You can add three projects for free, or pay %@ to add unlimited projects.\n\nIf you already bought the unlock on another device, press Restore Purchases." = "Puedes agregar tres proyectos gratis o pagar %@ para agregar proyectos ilimitados.\n\nSi ya compró el desbloqueo en otro dispositivo, presione Restaurar compras.";
+
+/* OTHERS */
+"*Select something to get started…*" = "*Seleccione algo para comenzar…*";
