@@ -6,6 +6,7 @@
 </h1>
 </p>
 <p align="center">
+      <a href="https://www.apple.com/ios/ios-15/">
         <img src="https://img.shields.io/badge/iOS-15.0+-important.svg" />
     <a href="https://swift.org/download/">
         <img src="https://img.shields.io/badge/swift-5.5-orange.svg?style=flat" alt="Language Swift 5.5" />
@@ -24,7 +25,7 @@
 - [Architecture](#architecture)
 - [System Integrations](#system-integrations)
 - [Additional Coaching Points](#additional-coaching-points)
-- [Taking it further…](#taking-it-further)
+- [Taking it Further…](#taking-it-further)
 - [Credits](#credits)
 - [License](#license)
 
@@ -67,7 +68,7 @@
 - Testing (Unit & UI) - Measuring performance, setting benchmarks.
 
 
-## Taking it further…
+## Taking it Further…
 
 - FocusState - keyboard label, prioritization.
 - Custom TextField (clear functionality).
