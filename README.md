@@ -19,6 +19,7 @@
 </p>
 
 
+      
 ## Table of Contents
 
 - [User Features](#user-features)
@@ -69,7 +70,7 @@
 - SwiftLint - Working off Command Line and implementing as a build phase. Adjusting .yml arguments.
 - Documenting Code - Documentation Comments, MARKS, FIXME, TODO, Orphaned explanation.
 - Testing (Unit & UI) - Measuring performance, setting benchmarks.
-- Internationalization(i18n) and localization(l10n) - genstrings, handling plurals, structuring interpolated data, and completely localized to English and Spanish.
+- Internationalization(i18n) & localization(l10n) - genstrings, plurals, interpolated data, and localized to English and Spanish.
 - State Restoration - @AppStorage / @SceneStorage and attaching tag to the Hashable protocol.
 
 
@@ -91,7 +92,7 @@
 - ProgressTiled - Project Summary on TodayView using guage meter
 - Shadows and glows (inner, raised)
 - @FocusState - reading and writing the current focus position in view hierarchy. Dismissing the keyboard
-- NotesHeader - Resigning First Responder using UIApplicationDelegateAdaptor to dismiss the keyboard of TextEditor
+- NotesHeader - Resigning First Responder to dismiss the keyboard in TextEditor
 - SwiftUI for iOS 15 - confirmationDialog, withAnimation, Button roles, submitLabel, textSelection, symbolRenderingMode, Visual Effect Blurs using Material, focusable, alert, onSubmit, foregroundStyle(semantic colors, gradients, glows, shadows)
 - Incorporating a multitude of Swift 5.5 API’s and Adhering to the latest Apple Interface Guidelines.
 
